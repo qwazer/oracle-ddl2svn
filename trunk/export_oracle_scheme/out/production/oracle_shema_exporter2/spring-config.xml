@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
+        <property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>
+    </bean>
+    
+    <bean id="dao" class="ru.mypkg.dao.DaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="fileWorker" class="ru.mypkg.filework.FileWorkerImpl">
+        <property name="outputPath" value="C:/temp/"/>
+    </bean>
+
+
+</beans>
