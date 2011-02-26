@@ -15,7 +15,7 @@ public class SpringUtils {
 
     public static ApplicationContext getApplicationContext() {
         if (applicationContext == null)
-            applicationContext = new ClassPathXmlApplicationContext("scheme-exporter.config.xml");
+            applicationContext = new ClassPathXmlApplicationContext("scheme2ddl.config.xml");
         return applicationContext;
     }
 
