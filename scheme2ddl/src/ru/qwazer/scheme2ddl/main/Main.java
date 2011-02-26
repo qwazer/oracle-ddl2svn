@@ -11,9 +11,59 @@ import ru.qwazer.scheme2ddl.worker.Worker;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    private static boolean justPrintUsage = false;
+    private static String dbUrl = null;
+    public static String outputDir = null;
+    public static boolean includeStorageInfo = false;
+
+    public static void main(String[] args) throws Exception {
+
+//        IWorker worker = (IWorker) SpringUtils.getSpringBean("worker");
+//
+//        worker.work();
+        collectArgs(args);
+        if (justPrintUsage) {
+            printUsage();
+            return;
+        }
         Worker worker = (Worker) SpringUtils.getSpringBean("worker");
         worker.work();
+        if (dbUrl!=null){
+           // worker
+        }
+
+    }
+
+    private static void collectArgs(String[] args) throws Exception {
+
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            if (arg.equals("-help") || arg.equals("-h")) {
+                justPrintUsage = true;
+            } else if (arg.equals("-url")) {
+                dbUrl = args[i + 1];
+                i++;
+            } else if (arg.equals("-o") || arg.equals("-output")) {
+                outputDir = args[i + 1];
+                i++;
+                createDir(outputDir);
+            } else if (arg.startsWith("-")) {
+                // we don't have any more args to recognize!
+                String msg = "Unknown argument: " + arg;
+                System.err.println(msg);
+                printUsage();
+                throw new Exception("");
+            }
+        }
+    }
+
+    private static void createDir(String outputDir) throws Exception {
+        try {
+            //createDir(outputDir);
+        } catch (Exception e) {
+            System.err.println("Cannot create output directory with name, exit");
+            throw new Exception("");
+        }
     }
 
     /**
@@ -23,17 +73,17 @@ public class Main {
         String lSep = System.getProperty("line.separator");
         StringBuffer msg = new StringBuffer();
         msg.append("oracle_schema_exporter [-url ] [-o] [-s]" + lSep);
-        msg.append("util for export oracle schema from DB to DDL scripts (file per object)"+ lSep);
-        msg.append("internally call to dbms_metadata.get_ddl "+ lSep);
-        msg.append("more config options in scheme2ddl.config.xml "+ lSep);
+        msg.append("util for export oracle schema from DB to DDL scripts (file per object)" + lSep);
+        msg.append("internally call to dbms_metadata.get_ddl " + lSep);
+        msg.append("more config options in scheme2ddl.config.xml " + lSep);
         msg.append("Options: " + lSep);
         msg.append("  -help, -h              print this message" + lSep);
-        msg.append("  -version               print the version information and exit" + lSep);
-       // msg.append("  -verbose, -v           be extra verbose" + lSep);
+       // msg.append("  -version               print the version information and exit" + lSep);
+        // msg.append("  -verbose, -v           be extra verbose" + lSep);
         msg.append("  -url,                  DB connection URL, example scott/tiger@localhost:1521:ORCL" + lSep);
 
-        msg.append("  -output, -o            output dir"  + lSep);
-        msg.append("  -s,                    include storage info in DDL scripts (default no include)"  + lSep);
+        msg.append("  -output, -o            output dir" + lSep);
+        msg.append("  -s,                    include storage info in DDL scripts (default no include)" + lSep);
         System.out.println(msg.toString());
     }
 
