@@ -1,8 +1,6 @@
 package ru.qwazer.scheme2ddl;
 
 import oracle.jdbc.pool.OracleDataSource;
-import ru.qwazer.scheme2ddl.SpringUtils;
-import ru.qwazer.scheme2ddl.Worker;
 
 /**
  * Created by IntelliJ IDEA.
@@ -74,7 +72,7 @@ public class Main {
             outputDir +=  "\\";
         }
         try {
-            //createDir(outputDir);  //todo
+            //check for creating dir todo
         } catch (Exception e) {
             System.err.println("Cannot create output directory with name, exit");
             throw new Exception("");
