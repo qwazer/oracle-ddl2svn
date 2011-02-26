@@ -21,7 +21,7 @@ import java.util.Set;
  * Date: 19.02.11
  * Time: 15:01
  */
-public class Dao extends JdbcDaoSupport implements IDao {
+public class Dao extends JdbcDaoSupport {
 
 
     private Map<String, Set<String>> map;

@@ -1,5 +1,5 @@
 import ru.qwazer.scheme2ddl.beans.UserObject;
-import ru.qwazer.scheme2ddl.dao.IDao;
+import ru.qwazer.scheme2ddl.dao.Dao;
 import ru.qwazer.scheme2ddl.utils.SpringUtils;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class Test {
     }
 
     public static void fillDDL() throws Exception {
-        IDao dao = (IDao) SpringUtils.getSpringBean("dao");
+        Dao dao = (Dao) SpringUtils.getSpringBean("dao");
         UserObject obj = new UserObject("TABLE", "BONUS", null);
         obj = dao.fillDDL(obj);
         System.out.println("obj = " + obj);
@@ -36,7 +36,7 @@ public class Test {
 
 
     public static void testGetUserObjectListPrintData() throws Exception {
-        IDao dao = (IDao) SpringUtils.getSpringBean("dao");
+        Dao dao = (Dao) SpringUtils.getSpringBean("dao");
         List<UserObject> list = dao.getUserObjectList(getFilterList());
          for (UserObject obj : list){
              System.out.println("obj = " + obj);
