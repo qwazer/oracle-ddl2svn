@@ -1,8 +1,8 @@
-package ru.qwazer.worker;
+package ru.qwazer.scheme2ddl.worker;
 
-import ru.qwazer.beans.UserObject;
-import ru.qwazer.dao.Dao;
-import ru.qwazer.filework.FileWorker;
+import ru.qwazer.scheme2ddl.beans.UserObject;
+import ru.qwazer.scheme2ddl.dao.Dao;
+import ru.qwazer.scheme2ddl.filework.FileWorker;
 
 import java.util.List;
 

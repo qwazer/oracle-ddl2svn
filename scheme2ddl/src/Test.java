@@ -1,6 +1,6 @@
-import ru.qwazer.beans.UserObject;
-import ru.qwazer.dao.Dao;
-import ru.qwazer.utils.SpringUtils;
+import ru.qwazer.scheme2ddl.beans.UserObject;
+import ru.qwazer.scheme2ddl.dao.Dao;
+import ru.qwazer.scheme2ddl.utils.SpringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
