@@ -1,4 +1,4 @@
-package ru.qwazer.scheme2ddl.utils;
+package ru.qwazer.scheme2ddl;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

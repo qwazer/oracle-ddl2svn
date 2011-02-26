@@ -1,9 +1,9 @@
-package ru.qwazer.scheme2ddl.dao;
+package ru.qwazer.scheme2ddl;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import ru.qwazer.scheme2ddl.beans.UserObject;
+import ru.qwazer.scheme2ddl.UserObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -105,7 +105,7 @@ public class Dao extends JdbcDaoSupport {
 
     /**
      *  Get user object list for processing;
-     * @return  List of ru.qwazer.scheme2ddl.beans.UserObject
+     * @return  List of ru.qwazer.scheme2ddl.UserObject
      */
     public List<UserObject> getUserObjectList() {
         return getUserObjectListPrivate(null);
@@ -114,7 +114,7 @@ public class Dao extends JdbcDaoSupport {
     /**
      * Get user object list for processing, filter by specified types
      * @param types  list of processed types
-     * @return   List of ru.qwazer.scheme2ddl.beans.UserObject
+     * @return   List of ru.qwazer.scheme2ddl.UserObject
      */
 
     public List<UserObject> getUserObjectList(List<String> types) {

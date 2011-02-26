@@ -1,7 +1,8 @@
 package ru.qwazer.scheme2ddl.dao;
 
 import org.junit.Test;
-import ru.qwazer.scheme2ddl.utils.SpringUtils;
+import ru.qwazer.scheme2ddl.Dao;
+import ru.qwazer.scheme2ddl.SpringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
