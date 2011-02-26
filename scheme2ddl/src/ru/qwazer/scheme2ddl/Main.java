@@ -1,8 +1,8 @@
-package ru.qwazer.scheme2ddl.main;
+package ru.qwazer.scheme2ddl;
 
 import oracle.jdbc.pool.OracleDataSource;
-import ru.qwazer.scheme2ddl.utils.SpringUtils;
-import ru.qwazer.scheme2ddl.worker.Worker;
+import ru.qwazer.scheme2ddl.SpringUtils;
+import ru.qwazer.scheme2ddl.Worker;
 
 /**
  * Created by IntelliJ IDEA.

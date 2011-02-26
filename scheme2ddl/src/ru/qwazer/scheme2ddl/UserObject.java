@@ -1,4 +1,4 @@
-package ru.qwazer.scheme2ddl.beans;
+package ru.qwazer.scheme2ddl;
 
 /**
  * Date: 19.02.11
