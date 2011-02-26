@@ -1,8 +1,8 @@
-package ru.mypkg.worker;
+package ru.reshet.worker;
 
-import ru.mypkg.beans.UserObject;
-import ru.mypkg.dao.Dao;
-import ru.mypkg.filework.FileWorker;
+import ru.reshet.beans.UserObject;
+import ru.reshet.dao.Dao;
+import ru.reshet.filework.FileWorker;
 
 import java.util.List;
 

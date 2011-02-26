@@ -1,6 +1,6 @@
-import ru.mypkg.beans.UserObject;
-import ru.mypkg.dao.Dao;
-import ru.mypkg.utils.SpringUtils;
+import ru.reshet.beans.UserObject;
+import ru.reshet.dao.Dao;
+import ru.reshet.utils.SpringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

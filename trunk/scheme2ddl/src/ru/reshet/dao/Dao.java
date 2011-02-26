@@ -1,6 +1,6 @@
-package ru.mypkg.dao;
+package ru.reshet.dao;
 
-import ru.mypkg.beans.UserObject;
+import ru.reshet.beans.UserObject;
 
 import java.util.List;
 
@@ -21,14 +21,14 @@ public interface Dao {
 
     /**
      *  Get user object list for processing;
-     * @return  List of ru.mypkg.beans.UserObject
+     * @return  List of ru.reshet.beans.UserObject
      */
     List<UserObject> getUserObjectList();
 
     /**
      * Get user object list for processing, filter by specified types
      * @param types  list of processed types
-     * @return   List of ru.mypkg.beans.UserObject
+     * @return   List of ru.reshet.beans.UserObject
      */
     List<UserObject> getUserObjectList(List<String> types);
 }

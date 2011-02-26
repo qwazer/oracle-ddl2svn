@@ -1,9 +1,9 @@
-package ru.mypkg.dao;
+package ru.reshet.dao;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import ru.mypkg.beans.UserObject;
+import ru.reshet.beans.UserObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

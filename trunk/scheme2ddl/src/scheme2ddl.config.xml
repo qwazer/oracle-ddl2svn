@@ -9,7 +9,7 @@
         <property name="URL" value="jdbc:oracle:thin:ogk2/ogk2@localhost:1521:ORCL"/>
     </bean>
 
-    <bean id="dao" class="ru.mypkg.dao.DaoImpl">
+    <bean id="dao" class="ru.reshet.dao.DaoImpl">
         <property name="dataSource" ref="dataSource"/>
         <property name="map">
             <map>
@@ -43,12 +43,12 @@
     </bean>
 
 
-    <bean id="fileWorker" class="ru.mypkg.filework.FileWorkerImpl">
+    <bean id="fileWorker" class="ru.reshet.filework.FileWorkerImpl">
         <property name="outputPath" value="C:/temp/"/>
         <property name="sortByDirectory" value="true"/>
     </bean>
 
-    <bean id="worker" class="ru.mypkg.worker.WorkerImpl">
+    <bean id="worker" class="ru.reshet.worker.WorkerImpl">
         <property name="dao" ref="dao"/>
         <property name="fileWorker" ref="fileWorker"/>
     </bean>

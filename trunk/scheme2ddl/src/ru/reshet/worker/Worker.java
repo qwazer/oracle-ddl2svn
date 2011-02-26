@@ -1,4 +1,4 @@
-package ru.mypkg.worker;
+package ru.reshet.worker;
 
 /**
  * Created by IntelliJ IDEA.

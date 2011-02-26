@@ -1,6 +1,6 @@
-package ru.mypkg.filework;
+package ru.reshet.filework;
 
-import ru.mypkg.beans.UserObject;
+import ru.reshet.beans.UserObject;
 
 import java.io.BufferedWriter;
 import java.io.File;
