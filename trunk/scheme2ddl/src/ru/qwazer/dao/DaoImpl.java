@@ -1,9 +1,9 @@
-package ru.reshet.dao;
+package ru.qwazer.dao;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import ru.reshet.beans.UserObject;
+import ru.qwazer.beans.UserObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

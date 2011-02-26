@@ -1,7 +1,7 @@
-package ru.reshet.main;
+package ru.qwazer.main;
 
-import ru.reshet.utils.SpringUtils;
-import ru.reshet.worker.Worker;
+import ru.qwazer.utils.SpringUtils;
+import ru.qwazer.worker.Worker;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,8 +1,8 @@
-package ru.reshet.worker;
+package ru.qwazer.worker;
 
-import ru.reshet.beans.UserObject;
-import ru.reshet.dao.Dao;
-import ru.reshet.filework.FileWorker;
+import ru.qwazer.beans.UserObject;
+import ru.qwazer.dao.Dao;
+import ru.qwazer.filework.FileWorker;
 
 import java.util.List;
 

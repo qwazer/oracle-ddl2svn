@@ -1,4 +1,4 @@
-package ru.reshet.worker;
+package ru.qwazer.worker;
 
 /**
  * Created by IntelliJ IDEA.

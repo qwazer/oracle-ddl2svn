@@ -1,6 +1,6 @@
-package ru.reshet.filework;
+package ru.qwazer.filework;
 
-import ru.reshet.beans.UserObject;
+import ru.qwazer.beans.UserObject;
 
 import java.io.BufferedWriter;
 import java.io.File;
