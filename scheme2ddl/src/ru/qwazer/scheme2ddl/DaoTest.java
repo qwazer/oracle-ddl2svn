@@ -1,4 +1,4 @@
-package ru.qwazer.scheme2ddl.dao;
+package ru.qwazer.scheme2ddl;
 
 import org.junit.Test;
 import ru.qwazer.scheme2ddl.Dao;
