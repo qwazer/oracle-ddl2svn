@@ -1,7 +1,5 @@
 package ru.qwazer.scheme2ddl;
 
-import ru.qwazer.scheme2ddl.UserObject;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
