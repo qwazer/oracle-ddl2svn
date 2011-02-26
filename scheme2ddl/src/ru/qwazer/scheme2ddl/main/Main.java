@@ -1,5 +1,6 @@
 package ru.qwazer.scheme2ddl.main;
 
+import oracle.jdbc.pool.OracleDataSource;
 import ru.qwazer.scheme2ddl.utils.SpringUtils;
 import ru.qwazer.scheme2ddl.worker.Worker;
 
@@ -27,11 +28,22 @@ public class Main {
             return;
         }
         Worker worker = (Worker) SpringUtils.getSpringBean("worker");
-        worker.work();
-        if (dbUrl!=null){
-           // worker
+        if (dbUrl!=null || outputDir!=null || includeStorageInfo){
+            modifyWorkerConfig(worker);
         }
+        worker.work();
 
+    }
+
+    private static void modifyWorkerConfig(Worker worker) throws Exception{
+         if (dbUrl!=null){
+            OracleDataSource ds = new OracleDataSource();
+            ds.setURL("jdbc:oracle:thin:"+dbUrl);
+            worker.getDao().setDataSource(ds);
+        }
+        if (outputDir!=null){
+            worker.getFileWorker().setOutputPath(outputDir);
+        }
     }
 
     private static void collectArgs(String[] args) throws Exception {
@@ -46,7 +58,7 @@ public class Main {
             } else if (arg.equals("-o") || arg.equals("-output")) {
                 outputDir = args[i + 1];
                 i++;
-                createDir(outputDir);
+                createDir();
             } else if (arg.startsWith("-")) {
                 // we don't have any more args to recognize!
                 String msg = "Unknown argument: " + arg;
@@ -57,9 +69,12 @@ public class Main {
         }
     }
 
-    private static void createDir(String outputDir) throws Exception {
+    private static void createDir() throws Exception {
+        if (!outputDir.endsWith("\\")){
+            outputDir +=  "\\";
+        }
         try {
-            //createDir(outputDir);
+            //createDir(outputDir);  //todo
         } catch (Exception e) {
             System.err.println("Cannot create output directory with name, exit");
             throw new Exception("");

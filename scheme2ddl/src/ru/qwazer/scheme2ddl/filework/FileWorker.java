@@ -28,6 +28,7 @@ public class FileWorker {
 
             out.write(obj.getDdl());
             out.close();
+            System.out.println("saved " + obj.getName() + " to file " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }

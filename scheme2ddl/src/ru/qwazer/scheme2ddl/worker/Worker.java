@@ -25,6 +25,7 @@ public class Worker {
         for (UserObject obj : list){
             obj = dao.fillDDL(obj);
             fileWorker.save2file(obj);
+            System.out.print(".");
         }
         System.out.println(" done " );
     }
