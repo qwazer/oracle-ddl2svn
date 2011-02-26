@@ -17,7 +17,7 @@ public class Test {
 //        Dao dao = (Dao)SpringUtils.getSpringBean("dao");
 //        UserObject obj = dao.getUserObjectByTypeName("TABLE", "EMP");
 //        System.out.println("obj = " + obj);
-//        FileWorker fileWorker = (FileWorker) SpringUtils.getSpringBean("fileWorker");
+//        IFileWorker fileWorker = (IFileWorker) SpringUtils.getSpringBean("fileWorker");
 //        fileWorker.save2file(obj);
    //    testTableDDL();
         fillDDL();
