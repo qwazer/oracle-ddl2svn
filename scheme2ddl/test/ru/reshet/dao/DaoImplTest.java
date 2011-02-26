@@ -1,8 +1,7 @@
-package ru.mypkg.dao;
+package ru.reshet.dao;
 
 import org.junit.Test;
-import ru.mypkg.beans.UserObject;
-import ru.mypkg.utils.SpringUtils;
+import ru.reshet.utils.SpringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

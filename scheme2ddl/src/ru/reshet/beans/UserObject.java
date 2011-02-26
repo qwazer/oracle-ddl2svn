@@ -1,4 +1,4 @@
-package ru.mypkg.beans;
+package ru.reshet.beans;
 
 /**
  * Date: 19.02.11

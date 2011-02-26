@@ -1,7 +1,7 @@
-package ru.mypkg.main;
+package ru.reshet.main;
 
-import ru.mypkg.utils.SpringUtils;
-import ru.mypkg.worker.Worker;
+import ru.reshet.utils.SpringUtils;
+import ru.reshet.worker.Worker;
 
 /**
  * Created by IntelliJ IDEA.
