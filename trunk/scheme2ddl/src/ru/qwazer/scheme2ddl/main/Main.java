@@ -22,7 +22,7 @@ public class Main {
     private static void printUsage() {
         String lSep = System.getProperty("line.separator");
         StringBuffer msg = new StringBuffer();
-        msg.append("oracle_schema_exporter [-url ] [-o]" + lSep);
+        msg.append("oracle_schema_exporter [-url ] [-o] [-s]" + lSep);
         msg.append("util for export oracle schema from DB to separate DDL files"+ lSep);
         msg.append("internally call to dbms_metadata.get_ddl "+ lSep);
         msg.append("more config options in scheme2ddl.config.xml "+ lSep);
@@ -32,8 +32,8 @@ public class Main {
        // msg.append("  -verbose, -v           be extra verbose" + lSep);
         msg.append("  -url,                  DB connection URL, example scott/tiger@localhost:1521:ORCL" + lSep);
 
-        msg.append("  -output, -o            output dir"
-                + lSep);
+        msg.append("  -output, -o            output dir"  + lSep);
+        msg.append("  -s,                    include storage info in DDL scripts (default no include)"  + lSep);
         System.out.println(msg.toString());
     }
 
