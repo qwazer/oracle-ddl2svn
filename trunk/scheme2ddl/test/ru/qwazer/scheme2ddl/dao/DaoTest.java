@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertNotNull;
  * Date: 20.02.11
  * Time: 11:44
  */
-public class DaoImplTest {
+public class DaoTest {
 
 
     List<String> getFilterList(){
@@ -28,13 +28,13 @@ public class DaoImplTest {
 
     @Test
     public void testGetUserObjectListIsNotNull() throws Exception {
-        Dao dao = (Dao) SpringUtils.getSpringBean("dao");
+        IDao dao = (IDao) SpringUtils.getSpringBean("dao");
         assertNotNull(dao.getUserObjectList());
     }
 
     @Test
     public void testGetUserObjectListIsNotEmpty() throws Exception {
-        Dao dao = (Dao) SpringUtils.getSpringBean("dao");
+        IDao dao = (IDao) SpringUtils.getSpringBean("dao");
         assertFalse(dao.getUserObjectList().isEmpty());
     }
     
@@ -42,7 +42,7 @@ public class DaoImplTest {
     @Test
     public void testGetUserObjectListWithFilterIsNotNull() throws Exception {
 
-        Dao dao = (Dao) SpringUtils.getSpringBean("dao");
+        IDao dao = (IDao) SpringUtils.getSpringBean("dao");
         assertNotNull(dao.getUserObjectList(getFilterList()));
     }
 

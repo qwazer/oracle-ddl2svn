@@ -1,7 +1,7 @@
 package ru.qwazer.scheme2ddl.worker;
 
 import ru.qwazer.scheme2ddl.beans.UserObject;
-import ru.qwazer.scheme2ddl.dao.Dao;
+import ru.qwazer.scheme2ddl.dao.IDao;
 import ru.qwazer.scheme2ddl.filework.IFileWorker;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Worker {
 
-    private Dao dao;
+    private IDao dao;
     private IFileWorker fileWorker;
 
 
@@ -29,7 +29,7 @@ public class Worker {
         System.out.println(" done " );
     }
 
-    public void setDao(Dao dao) {
+    public void setDao(IDao dao) {
         this.dao = dao;
     }
 
@@ -37,7 +37,7 @@ public class Worker {
         this.fileWorker = fileWorker;
     }
 
-    public Dao getDao() {
+    public IDao getDao() {
         return dao;
     }
 

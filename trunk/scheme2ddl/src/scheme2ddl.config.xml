@@ -9,7 +9,7 @@
         <!--<property name="URL" value="jdbc:oracle:thin:ogk2/ogk2@localhost:1521:ORCL"/>-->
     </bean>
 
-    <bean id="dao" class="ru.qwazer.scheme2ddl.dao.DaoImpl">
+    <bean id="dao" class="ru.qwazer.scheme2ddl.dao.Dao">
         <property name="dataSource" ref="dataSource"/>
         <property name="map">
             <map>
