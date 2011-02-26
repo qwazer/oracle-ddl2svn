@@ -1,7 +1,7 @@
-package ru.qwazer.main;
+package ru.qwazer.scheme2ddl.main;
 
-import ru.qwazer.utils.SpringUtils;
-import ru.qwazer.worker.Worker;
+import ru.qwazer.scheme2ddl.utils.SpringUtils;
+import ru.qwazer.scheme2ddl.worker.Worker;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,6 +1,6 @@
-package ru.qwazer.filework;
+package ru.qwazer.scheme2ddl.filework;
 
-import ru.qwazer.beans.UserObject;
+import ru.qwazer.scheme2ddl.beans.UserObject;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -1,4 +1,4 @@
-package ru.qwazer.worker;
+package ru.qwazer.scheme2ddl.worker;
 
 /**
  * Created by IntelliJ IDEA.

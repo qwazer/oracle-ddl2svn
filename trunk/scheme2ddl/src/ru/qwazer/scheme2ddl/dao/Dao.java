@@ -1,6 +1,6 @@
-package ru.qwazer.dao;
+package ru.qwazer.scheme2ddl.dao;
 
-import ru.qwazer.beans.UserObject;
+import ru.qwazer.scheme2ddl.beans.UserObject;
 
 import java.util.List;
 
@@ -21,14 +21,14 @@ public interface Dao {
 
     /**
      *  Get user object list for processing;
-     * @return  List of ru.qwazer.beans.UserObject
+     * @return  List of ru.qwazer.scheme2ddl.beans.UserObject
      */
     List<UserObject> getUserObjectList();
 
     /**
      * Get user object list for processing, filter by specified types
      * @param types  list of processed types
-     * @return   List of ru.qwazer.beans.UserObject
+     * @return   List of ru.qwazer.scheme2ddl.beans.UserObject
      */
     List<UserObject> getUserObjectList(List<String> types);
 }

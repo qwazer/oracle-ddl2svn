@@ -1,9 +1,9 @@
-package ru.qwazer.dao;
+package ru.qwazer.scheme2ddl.dao;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import ru.qwazer.beans.UserObject;
+import ru.qwazer.scheme2ddl.beans.UserObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
