@@ -23,7 +23,7 @@ public class Main {
         String lSep = System.getProperty("line.separator");
         StringBuffer msg = new StringBuffer();
         msg.append("oracle_schema_exporter [-url ] [-o] [-s]" + lSep);
-        msg.append("util for export oracle schema from DB to separate DDL files"+ lSep);
+        msg.append("util for export oracle schema from DB to DDL scripts (file per object)"+ lSep);
         msg.append("internally call to dbms_metadata.get_ddl "+ lSep);
         msg.append("more config options in scheme2ddl.config.xml "+ lSep);
         msg.append("Options: " + lSep);
