@@ -25,7 +25,7 @@ public class Main {
         msg.append("oracle_schema_exporter [-url ] [-o]" + lSep);
         msg.append("util for export oracle schema from DB to separate DDL files"+ lSep);
         msg.append("internally call to dbms_metadata.get_ddl "+ lSep);
-        msg.append("more config options in scheme-exporter.config.xml "+ lSep);
+        msg.append("more config options in scheme2ddl.config.xml "+ lSep);
         msg.append("Options: " + lSep);
         msg.append("  -help, -h              print this message" + lSep);
         msg.append("  -version               print the version information and exit" + lSep);
