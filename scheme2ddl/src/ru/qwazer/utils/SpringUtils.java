@@ -1,4 +1,4 @@
-package ru.reshet.utils;
+package ru.qwazer.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

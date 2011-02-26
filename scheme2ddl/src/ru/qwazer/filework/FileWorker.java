@@ -1,6 +1,6 @@
-package ru.reshet.filework;
+package ru.qwazer.filework;
 
-import ru.reshet.beans.UserObject;
+import ru.qwazer.beans.UserObject;
 
 /**
  * Created by IntelliJ IDEA.

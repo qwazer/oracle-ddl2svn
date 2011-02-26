@@ -1,4 +1,4 @@
-package ru.reshet.beans;
+package ru.qwazer.beans;
 
 /**
  * Date: 19.02.11

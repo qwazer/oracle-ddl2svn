@@ -1,6 +1,6 @@
-import ru.reshet.beans.UserObject;
-import ru.reshet.dao.Dao;
-import ru.reshet.utils.SpringUtils;
+import ru.qwazer.beans.UserObject;
+import ru.qwazer.dao.Dao;
+import ru.qwazer.utils.SpringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

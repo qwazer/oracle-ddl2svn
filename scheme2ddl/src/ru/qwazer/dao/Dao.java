@@ -1,6 +1,6 @@
-package ru.reshet.dao;
+package ru.qwazer.dao;
 
-import ru.reshet.beans.UserObject;
+import ru.qwazer.beans.UserObject;
 
 import java.util.List;
 
@@ -21,14 +21,14 @@ public interface Dao {
 
     /**
      *  Get user object list for processing;
-     * @return  List of ru.reshet.beans.UserObject
+     * @return  List of ru.qwazer.beans.UserObject
      */
     List<UserObject> getUserObjectList();
 
     /**
      * Get user object list for processing, filter by specified types
      * @param types  list of processed types
-     * @return   List of ru.reshet.beans.UserObject
+     * @return   List of ru.qwazer.beans.UserObject
      */
     List<UserObject> getUserObjectList(List<String> types);
 }

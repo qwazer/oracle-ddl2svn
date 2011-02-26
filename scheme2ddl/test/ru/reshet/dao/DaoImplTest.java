@@ -1,7 +1,7 @@
-package ru.reshet.dao;
+package ru.qwazer.dao;
 
 import org.junit.Test;
-import ru.reshet.utils.SpringUtils;
+import ru.qwazer.utils.SpringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
