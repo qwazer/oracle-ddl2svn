@@ -28,13 +28,13 @@ public class DaoTest {
 
     @Test
     public void testGetUserObjectListIsNotNull() throws Exception {
-        IDao dao = (IDao) SpringUtils.getSpringBean("dao");
+        Dao dao = (Dao) SpringUtils.getSpringBean("dao");
         assertNotNull(dao.getUserObjectList());
     }
 
     @Test
     public void testGetUserObjectListIsNotEmpty() throws Exception {
-        IDao dao = (IDao) SpringUtils.getSpringBean("dao");
+        Dao dao = (Dao) SpringUtils.getSpringBean("dao");
         assertFalse(dao.getUserObjectList().isEmpty());
     }
     
@@ -42,7 +42,7 @@ public class DaoTest {
     @Test
     public void testGetUserObjectListWithFilterIsNotNull() throws Exception {
 
-        IDao dao = (IDao) SpringUtils.getSpringBean("dao");
+        Dao dao = (Dao) SpringUtils.getSpringBean("dao");
         assertNotNull(dao.getUserObjectList(getFilterList()));
     }
 
