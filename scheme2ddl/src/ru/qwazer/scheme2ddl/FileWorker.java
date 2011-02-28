@@ -32,6 +32,7 @@ public class FileWorker {
         }
     }
 
+    //todo fix issue 2,3,4
     public String createFullFileName(UserObject obj) throws IOException{
         String res = "";
         if (sortByDirectory){
