@@ -108,7 +108,15 @@ public class Dao extends JdbcDaoSupport {
      * @return  List of ru.qwazer.scheme2ddl.UserObject
      */
     public List<UserObject> getUserObjectList() {
-        return getUserObjectListPrivate(null);
+        String whereAdd = null;
+        if (onlyTypes != null && !onlyTypes.isEmpty()) {
+            whereAdd = " where object_type in ( ";
+            for (String type : onlyTypes) {
+                whereAdd += "'" + type.toUpperCase() + "',";
+            }
+            whereAdd += "'')";
+        }
+        return getUserObjectListPrivate(whereAdd);
     }
 
     /**
