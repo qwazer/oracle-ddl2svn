@@ -38,7 +38,7 @@ public class Dao extends JdbcDaoSupport {
 
 
     private String getBasedDDL(UserObject obj) {
-        return getDLLByTypeName(obj.getType(), obj.getName());
+        return getDLLByTypeName(obj.getType4DBMS(), obj.getName());
     }
 
 

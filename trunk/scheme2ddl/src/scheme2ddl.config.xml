@@ -5,7 +5,6 @@
         >
 
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
-        <property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>
         <!--<property name="URL" value="jdbc:oracle:thin:ogk2/ogk2@localhost:1521:ORCL"/>-->
     </bean>
 
@@ -22,6 +21,14 @@
                 <entry key="VIEW">
                     <set>
                         <value>COMMENT</value>
+                        <value>OBJECT_GRANT</value>
+                    </set>
+
+                </entry>
+                <entry key="MATERIALIZED VIEW">
+                    <set>
+                        <value>MATERIALIZED_VIEW_LOG</value>
+                        <value>OBJECT_GRANT</value>
                     </set>
 
                 </entry>
@@ -30,15 +37,18 @@
         <property name="transformParams" ref="transformParams_for_dbms_metadata"/>
         <property name="onlyTypes">
             <set>
-                <value>TABLE</value>
+                <!--<value>TABLE</value>-->
                 <value>VIEW</value>
+                <!--<value>FUNCTION</value>-->
+                <value>MATERIALIZED VIEW</value>
+                <!--<value>TRIGGER</value>-->
             </set>
         </property>
     </bean>
 
 
     <bean id="fileWorker" class="ru.qwazer.scheme2ddl.FileWorker">
-        <property name="outputPath" value="C:/temp/"/>
+        <property name="outputPath" value="D:/temp/oracle-ddl2svn/"/>
         <property name="sortByDirectory" value="true"/>
     </bean>
 
