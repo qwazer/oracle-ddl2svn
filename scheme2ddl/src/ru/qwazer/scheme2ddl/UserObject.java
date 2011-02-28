@@ -26,6 +26,10 @@ public class UserObject {
         return type;
     }
 
+    public String getType4DBMS(){
+        return type.replaceAll(" ", "_");
+    }
+
     public void setType(String type) {
         this.type = type;
     }
