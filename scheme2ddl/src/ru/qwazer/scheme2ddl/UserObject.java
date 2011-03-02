@@ -1,7 +1,7 @@
 package ru.qwazer.scheme2ddl;
 
 /**
- * Database user object
+ * Class for storing database user object
  * Date: 19.02.11
  * Time: 14:53
  */
