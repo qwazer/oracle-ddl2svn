@@ -42,8 +42,24 @@ public class Dao extends JdbcDaoSupport {
      * @param obj
      * @return
      */
-    private String getPrimaryDDL(UserObject obj) {
-        return getDLLByTypeName(obj.getType4DBMS(), obj.getName());
+    private String getPrimaryDDL(final UserObject obj) {
+        return (String) getJdbcTemplate().execute(new ConnectionCallback() {
+            public Object doInConnection(Connection connection) throws SQLException, DataAccessException {
+                setTransformParameters(connection);
+                PreparedStatement ps = connection.prepareStatement("select dbms_metadata.get_ddl(?, ?) from dual");
+                ps.setString(1, obj.getType4DBMS());
+                ps.setString(2, obj.getName());
+                ResultSet rs = ps.executeQuery();
+                try {
+                    if (rs.next()) {
+                        return rs.getString(1).trim();
+                    }
+                } finally {
+                    rs.close();
+                }
+                return null;
+            }
+        });
     }
 
 
@@ -60,26 +76,6 @@ public class Dao extends JdbcDaoSupport {
     }
 
 
-    private String getDLLByTypeName(final String type, final String name) {
-
-        return (String) getJdbcTemplate().execute(new ConnectionCallback() {
-            public Object doInConnection(Connection connection) throws SQLException, DataAccessException {
-                setTransformParameters(connection);
-                PreparedStatement ps = connection.prepareStatement("select dbms_metadata.get_ddl(?, ?) from dual");
-                ps.setString(1, type);
-                ps.setString(2, name);
-                ResultSet rs = ps.executeQuery();
-                try {
-                    if (rs.next()) {
-                        return rs.getString(1);
-                    }
-                } finally {
-                    rs.close();
-                }
-                return null;
-            }
-        });
-    }
 
     private String getDependentDLLByTypeName(final String type, final String name) {
 
