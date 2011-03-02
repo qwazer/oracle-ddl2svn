@@ -26,6 +26,12 @@ public class UserObject {
         return type;
     }
 
+    /**
+     * Oracle types in user_table without underscore, for example PACKAGE BODY
+     * but in DBMS_METADATA with underscore   PACKAGE_BODY
+     * @return  type name foe using in  DBMS_METADATA package
+     */
+
     public String getType4DBMS(){
         return type.replaceAll(" ", "_");
     }
