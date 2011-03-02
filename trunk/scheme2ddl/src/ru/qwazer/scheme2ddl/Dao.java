@@ -3,7 +3,6 @@ package ru.qwazer.scheme2ddl;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import ru.qwazer.scheme2ddl.UserObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +15,7 @@ import java.util.Set;
 
 
 /**
- * Created by IntelliJ IDEA.
+ * DAO class for working with database
  * User: Reshetnikov AV resheto@gmail.com
  * Date: 19.02.11
  * Time: 15:01
@@ -30,14 +29,20 @@ public class Dao extends JdbcDaoSupport {
 
     public UserObject fillDDL(UserObject obj) {
         String ddl = "";
-        ddl += getBasedDDL(obj);
+        ddl += getPrimaryDDL(obj);
         ddl += getDependedDDL(obj);
         obj.setDdl(ddl);
         return obj;
     }
 
 
-    private String getBasedDDL(UserObject obj) {
+    /**
+     * There is  primary and depended DDL in DMBS_METADATA package
+     * Example of primary is TABLE, example of depended is INDEX
+     * @param obj
+     * @return
+     */
+    private String getPrimaryDDL(UserObject obj) {
         return getDLLByTypeName(obj.getType4DBMS(), obj.getName());
     }
 
