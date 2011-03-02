@@ -65,10 +65,10 @@ public class Dao extends JdbcDaoSupport {
 
     private String getDependedDDL(UserObject obj) {
         String res = "";
-        Set<String> dependedItems = map.get(obj.getType());
-        if (dependedItems != null) {
-            for (String depItem : dependedItems) {
-                res += getDependentDLLByTypeName(depItem, obj.getName()).trim();
+        Set<String> dependedTypes = map.get(obj.getType());
+        if (dependedTypes != null) {
+            for (String dependedType : dependedTypes) {
+                res += getDependentDLLByTypeName(dependedType, obj.getName()).trim();
             }
         }
         return res;
