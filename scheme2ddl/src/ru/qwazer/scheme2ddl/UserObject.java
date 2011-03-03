@@ -2,6 +2,7 @@ package ru.qwazer.scheme2ddl;
 
 /**
  * Class for storing database user object
+ * It's not simple bean, it also provide additional get method for file worker class
  * Date: 19.02.11
  * Time: 14:53
  */
