@@ -32,22 +32,22 @@ public class FileWorker {
         }
     }
 
-    //todo fix issue 2,3,4
+    //todo fix issue 2,3,4    //todo refactor
     public String createFullFileName(UserObject obj) throws IOException{
         String res = "";
         if (sortByDirectory){
-           String dirPath = outputPath + obj.getType();
-            prepareDir(dirPath);
+           String dirPath = outputPath + obj.getTypePlural();
+            createDirIfNotExist(dirPath);
 
-           res = obj.getType() + "/" + obj.getName() + ".sql";
+           res = obj.getTypePlural() + "/" + obj.getName4Filename() + ".sql";
         }
         else {
-            res = obj.getName() + "." + obj.getType() + ".sql";
+            res = obj.getName4Filename() + "." + obj.getType() + ".sql";
         }
         return outputPath + res;
     }
 
-    private void prepareDir(String dirPath) throws IOException {
+    private void createDirIfNotExist(String dirPath) throws IOException {
         File dir = new File(dirPath);
         if (!dir.exists() && !dir.mkdirs()) {
              throw new IOException("Unable to create " + dir.getAbsolutePath());

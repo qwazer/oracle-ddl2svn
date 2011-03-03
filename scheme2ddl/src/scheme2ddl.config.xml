@@ -16,6 +16,8 @@
                     <set>
                         <value>COMMENT</value>
                         <value>INDEX</value>
+                        <value>OBJECT_GRANT</value>
+                        <value>TRIGGER</value>
                     </set>
                 </entry>
                 <entry key="VIEW">
@@ -27,6 +29,8 @@
                 </entry>
                 <entry key="MATERIALIZED VIEW">
                     <set>
+                        <value>COMMENT</value>
+                        <value>INDEX</value>
                         <value>MATERIALIZED_VIEW_LOG</value>
                         <value>OBJECT_GRANT</value>
                     </set>
@@ -37,18 +41,20 @@
         <property name="transformParams" ref="transformParams_for_dbms_metadata"/>
         <property name="onlyTypes">
             <set>
-                <!--<value>TABLE</value>-->
+                <value>TABLE</value>
                 <value>VIEW</value>
-                <!--<value>FUNCTION</value>-->
+                <value>FUNCTION</value>
                 <value>MATERIALIZED VIEW</value>
-                <!--<value>TRIGGER</value>-->
+                <value>TRIGGER</value>
+                <value>PACKAGE</value>
+                <value>TYPE</value>
             </set>
         </property>
     </bean>
 
 
     <bean id="fileWorker" class="ru.qwazer.scheme2ddl.FileWorker">
-        <property name="outputPath" value="D:/temp/oracle-ddl2svn/"/>
+        <property name="outputPath" value="D:/temp/oracle-ddl2svn/CTK/DEV/"/>
         <property name="sortByDirectory" value="true"/>
     </bean>
 
