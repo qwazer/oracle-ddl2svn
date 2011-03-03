@@ -18,12 +18,32 @@ public class UserObject {
         return name;
     }
 
+    /**
+     * Get name for filename
+     * @return  name for filename
+     */
+    public String getName4Filename() {
+        return name.toLowerCase().replaceAll("/", "");
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public String getType() {
         return type;
+    }
+
+    /**
+     * used if sortByDirectory = true
+     * for creating directory names
+     * @return
+     */
+    public String getTypePlural() {
+        if (type.toLowerCase().endsWith("x")) {
+            return type.toLowerCase()+"ex";
+        }
+        return type.toLowerCase()+"s";
     }
 
     /**
