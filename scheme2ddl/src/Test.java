@@ -20,6 +20,8 @@ public class Test {
 //        IFileWorker fileWorker = (IFileWorker) SpringUtils.getSpringBean("fileWorker");
 //        fileWorker.save2file(obj);
    //    testTableDDL();
+        //UserObject obj = new UserObject();
+        //obj.setName("SYS_IOT_OVER_60777", );
         fillDDL();
       //    testGetUserObjectListPrintData();
     }
@@ -37,7 +39,7 @@ public class Test {
 
     public static void testGetUserObjectListPrintData() throws Exception {
         Dao dao = (Dao) SpringUtils.getSpringBean("dao");
-        List<UserObject> list = dao.getUserObjectList(getFilterList());
+        List<UserObject> list = dao.getUserObjectList();
          for (UserObject obj : list){
              System.out.println("obj = " + obj);
          }
