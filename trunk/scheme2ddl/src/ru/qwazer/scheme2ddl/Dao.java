@@ -89,7 +89,7 @@ public class Dao extends JdbcDaoSupport {
                 try {
                     rs = ps.executeQuery();
                 } catch (SQLException e) {
-                    System.err.println("error of get_dependent_ddl for object type " + type + " of object name " + name);
+                    //System.err.println("error of get_dependent_ddl for object type " + type + " of object name " + name);
                     return "";
                 }
                 try {
@@ -111,7 +111,7 @@ public class Dao extends JdbcDaoSupport {
     public List<UserObject> getUserObjectList() {
         String whereAdd = null;
         if (onlyTypes != null && !onlyTypes.isEmpty()) {
-            whereAdd = " where object_type in ( ";
+            whereAdd = " and object_type in ( ";
             for (String type : onlyTypes) {
                 whereAdd += "'" + type.toUpperCase() + "',";
             }
@@ -120,27 +120,22 @@ public class Dao extends JdbcDaoSupport {
         return getUserObjectListPrivate(whereAdd);
     }
 
-    /**
-     * Get user object list for processing, filter by specified types
-     * @param types  list of processed types
-     * @return   List of ru.qwazer.scheme2ddl.UserObject
-     */
 
-    public List<UserObject> getUserObjectList(List<String> types) {
-        String whereAdd = null;
-        if (types != null && !types.isEmpty()) {
-            whereAdd = " where object_type in ( ";
-            for (String type : types) {
-                whereAdd += "'" + type.toUpperCase() + "',";
-            }
-            whereAdd += "'')";
-        }
-        return getUserObjectListPrivate(whereAdd);
-    }
+//    public List<UserObject> getUserObjectList(List<String> types) {
+//        String whereAdd = null;
+//        if (types != null && !types.isEmpty()) {
+//            whereAdd = "and object_type in ( ";
+//            for (String type : types) {
+//                whereAdd += "'" + type.toUpperCase() + "',";
+//            }
+//            whereAdd += "'')";
+//        }
+//        return getUserObjectListPrivate(whereAdd);
+//    }
 
     private List<UserObject> getUserObjectListPrivate(String whereAdd) {
 
-        String select_sql = "select t.object_name, t.object_type from user_objects t";
+        String select_sql = "select t.object_name, t.object_type from user_objects t where t.generated='N' ";
         final String sql;
         if (whereAdd != null && !whereAdd.equals("")) {
             sql = select_sql + whereAdd;

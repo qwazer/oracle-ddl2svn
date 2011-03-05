@@ -44,7 +44,7 @@ public class DaoTest {
     public void testGetUserObjectListWithFilterIsNotNull() throws Exception {
 
         Dao dao = (Dao) SpringUtils.getSpringBean("dao");
-        assertNotNull(dao.getUserObjectList(getFilterList()));
+        assertNotNull(dao.getUserObjectList());
     }
 
 
