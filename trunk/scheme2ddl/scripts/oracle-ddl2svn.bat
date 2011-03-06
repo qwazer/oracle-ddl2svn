@@ -14,12 +14,16 @@ rem second parameter is OUTPUT_DIR
 rem you can overwrite this parameters
 set DB_URL=%1
 set OUTPUT_DIR=%2
+set COMMIT_MESSAGE="automatic commit by oracle-ddl2svn"
 
 rem delete all files from output directory exept system files
 rem this command must keep on disk svn meta information stored in .svn folders
 del %OUTPUT_DIR% /Q /S /A-S
 java -jar scheme2ddl.jar -url %DB_URL% -output %OUTPUT_DIR%
-call autocommit %OUTPUT_DIR% 
+rem call autocommit %OUTPUT_DIR% 
+for /f "tokens=2*" %%i in ('svn status %OUTPUT_DIR% ^| find "?"') do svn add "%%i"
+for /f "tokens=2*" %%i in ('svn status %OUTPUT_DIR% ^| find "!"') do svn delete "%%i"
+svn commit -m %COMMIT_MESSAGE% %OUTPUT_DIR%
 
 
 
