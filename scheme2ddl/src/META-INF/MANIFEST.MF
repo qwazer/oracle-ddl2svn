@@ -1,8 +1,6 @@
 Manifest-Version: 1.0
-Class-Path: spring-jms.jar ojdbc14.jar spring-orm.jar spring-beans.jar
-  spring-asm.jar spring-context.jar aopalliance.jar spring-aop.jar spr
- ing-tx.jar spring-oxm.jar commons-logging.jar spring-aspects.jar spri
- ng-core.jar spring-expression.jar spring-instrument.jar spring-jdbc.j
- ar junit-4.8.jar
+Class-Path: spring-expression.jar spring-asm.jar ojdbc14.jar spring-co
+ ntext.jar spring-core.jar spring-jdbc.jar spring-tx.jar spring-beans.
+ jar commons-logging.jar
 Main-Class: ru.qwazer.scheme2ddl.Main
 
