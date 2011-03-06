@@ -1,7 +1,7 @@
 package ru.qwazer.scheme2ddl;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,9 +13,15 @@ public class SpringUtils {
 
     static ApplicationContext applicationContext;
 
+//    public static ApplicationContext getApplicationContext() {
+//        if (applicationContext == null)
+//            applicationContext = new ClassPathXmlApplicationContext("scheme2ddl.config.xml");
+//        return applicationContext;
+//    }
+
     public static ApplicationContext getApplicationContext() {
         if (applicationContext == null)
-            applicationContext = new ClassPathXmlApplicationContext("scheme2ddl.config.xml");
+            applicationContext = new FileSystemXmlApplicationContext("scheme2ddl.config.xml");
         return applicationContext;
     }
 

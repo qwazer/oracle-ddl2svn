@@ -5,6 +5,7 @@
         >
 
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
+        <property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>
         <!--<property name="URL" value="jdbc:oracle:thin:ogk2/ogk2@localhost:1521:ORCL"/>-->
     </bean>
 
@@ -58,10 +59,6 @@
         <property name="sortByDirectory" value="true"/>
     </bean>
 
-    <bean id="worker" class="ru.qwazer.scheme2ddl.Worker">
-        <property name="dao" ref="dao"/>
-        <property name="fileWorker" ref="fileWorker"/>
-    </bean>
 
     <util:map id="transformParams_for_dbms_metadata">
         <entry key="SEGMENT_ATTRIBUTES" value="0"/>
@@ -69,9 +66,10 @@
         <entry key="CONSTRAINTS_AS_ALTER" value="1"/>
     </util:map>
 
-    <!--<util:map id="object_types_for_export" value-type="">-->
-        <!---->
-    <!--</util:map>-->
+    <bean id="worker" class="ru.qwazer.scheme2ddl.Worker">
+        <property name="dao" ref="dao"/>
+        <property name="fileWorker" ref="fileWorker"/>
+    </bean>
 
 
 </beans>
