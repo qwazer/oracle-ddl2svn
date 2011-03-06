@@ -109,7 +109,8 @@ public class Main {
         msg.append("  -help, -h              print this message" + lSep);
        // msg.append("  -version               print the version information and exit" + lSep);
         // msg.append("  -verbose, -v           be extra verbose" + lSep);
-        msg.append("  -url,                  DB connection URL, example scott/tiger@localhost:1521:ORCL" + lSep);
+        msg.append("  -url,                  DB connection URL" + lSep);
+        msg.append("                         example: scott/tiger@localhost:1521:ORCL" + lSep);
 
         msg.append("  -output, -o            output dir" + lSep);
         msg.append("  -s,                    include storage info in DDL scripts (default no include)" + lSep);
