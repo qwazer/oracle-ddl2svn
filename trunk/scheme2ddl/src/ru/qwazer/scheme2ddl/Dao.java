@@ -41,7 +41,7 @@ public class Dao extends JdbcDaoSupport {
 
     private Map<String, Set<String>> map;
     private Map<String,String> transformParams;
-    private Set<String> onlyTypes;
+    private Set<String> filterTypes;
 
     public UserObject fillDDL(UserObject obj) {
         String ddl = "";
@@ -126,9 +126,9 @@ public class Dao extends JdbcDaoSupport {
      */
     public List<UserObject> getUserObjectList() {
         String whereAdd = null;
-        if (onlyTypes != null && !onlyTypes.isEmpty()) {
+        if (filterTypes != null && !filterTypes.isEmpty()) {
             whereAdd = " and object_type in ( ";
-            for (String type : onlyTypes) {
+            for (String type : filterTypes) {
                 whereAdd += "'" + type.toUpperCase() + "',";
             }
             whereAdd += "'')";
@@ -198,8 +198,8 @@ public class Dao extends JdbcDaoSupport {
     }
 
 
-    public void setOnlyTypes(Set<String> onlyTypes) {
-        this.onlyTypes = onlyTypes;
+    public void setFilterTypes(Set<String> types) {
+        this.filterTypes = types;
     }
 
 

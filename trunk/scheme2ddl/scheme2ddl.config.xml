@@ -40,7 +40,7 @@
             </map>
         </property>
         <property name="transformParams" ref="transformParams_for_dbms_metadata"/>
-        <property name="onlyTypes">
+        <property name="filterTypes">
             <set>
                 <value>TABLE</value>
                 <value>VIEW</value>
