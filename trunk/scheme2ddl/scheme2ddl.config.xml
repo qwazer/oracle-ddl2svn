@@ -9,7 +9,8 @@
     </bean>
 
     <bean id="dao" class="ru.qwazer.scheme2ddl.Dao">
-        <property name="dataSource" ref="dataSource"/>
+        <!-- Specify dependable items for every user object type
+         accordingly with http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm#BGBIEDIA-->
         <property name="map">
             <map>
                 <entry key="TABLE">
@@ -33,14 +34,16 @@
                         <value>MATERIALIZED_VIEW_LOG</value>
                         <value>OBJECT_GRANT</value>
                     </set>
-
                 </entry>
             </map>
         </property>
+        <property name="dataSource" ref="dataSource"/>
         <property name="transformParams" ref="transformParams_for_dbms_metadata"/>
         <property name="filterTypes" ref="types_for_getting_DDL"/>
     </bean>
 
+    <!-- todo add all types of user objects -->
+    <!-- uncomment lines with user object types you want export as DDL -->
     <util:set id="types_for_getting_DDL">
         <value>TABLE</value>
         <value>VIEW</value>
@@ -51,13 +54,13 @@
         <value>TYPE</value>
     </util:set>
 
-
+    <!-- output options -->
     <bean id="fileWorker" class="ru.qwazer.scheme2ddl.FileWorker">
         <property name="outputPath" value="D:/temp/oracle-ddl2svn/CTK/DEV/"/>
         <property name="sortByDirectory" value="true"/>
     </bean>
 
-
+   <!-- http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm#BGBJBFGE -->
     <util:map id="transformParams_for_dbms_metadata">
         <entry key="SEGMENT_ATTRIBUTES" value="0"/>
         <entry key="SQLTERMINATOR" value="1"/>
