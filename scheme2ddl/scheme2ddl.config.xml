@@ -6,7 +6,6 @@
 
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
         <property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>
-        <!--<property name="URL" value="jdbc:oracle:thin:ogk2/ogk2@localhost:1521:ORCL"/>-->
     </bean>
 
     <bean id="dao" class="ru.qwazer.scheme2ddl.Dao">
@@ -26,7 +25,6 @@
                         <value>COMMENT</value>
                         <value>OBJECT_GRANT</value>
                     </set>
-
                 </entry>
                 <entry key="MATERIALIZED VIEW">
                     <set>
@@ -40,18 +38,18 @@
             </map>
         </property>
         <property name="transformParams" ref="transformParams_for_dbms_metadata"/>
-        <property name="filterTypes">
-            <set>
-                <value>TABLE</value>
-                <value>VIEW</value>
-                <value>FUNCTION</value>
-                <value>MATERIALIZED VIEW</value>
-                <value>TRIGGER</value>
-                <value>PACKAGE</value>
-                <value>TYPE</value>
-            </set>
-        </property>
+        <property name="filterTypes" ref="types_for_getting_DDL"/>
     </bean>
+
+    <util:set id="types_for_getting_DDL">
+        <value>TABLE</value>
+        <value>VIEW</value>
+        <value>FUNCTION</value>
+        <value>MATERIALIZED VIEW</value>
+        <value>TRIGGER</value>
+        <value>PACKAGE</value>
+        <value>TYPE</value>
+    </util:set>
 
 
     <bean id="fileWorker" class="ru.qwazer.scheme2ddl.FileWorker">
@@ -62,7 +60,7 @@
 
     <util:map id="transformParams_for_dbms_metadata">
         <entry key="SEGMENT_ATTRIBUTES" value="0"/>
-        <entry key="SQLTERMINATOR" value="1" />
+        <entry key="SQLTERMINATOR" value="1"/>
         <entry key="CONSTRAINTS_AS_ALTER" value="1"/>
     </util:map>
 
