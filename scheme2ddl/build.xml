@@ -194,6 +194,32 @@
         </manifest>
 
     </target>
+
+
+<!-- software revision number -->
+<property name="version" value="0.0"/>
+
+<target name="buildinfo">
+    <tstamp>
+        <format property="builtat" pattern="MM/dd/yyyy hh:mm aa"/>
+    </tstamp>
+    <exec executable="svnversion" outputproperty="svnversion"/>
+    <exec executable="svn" outputproperty="svninfo">
+        <arg value="info"/>
+    </exec>
+        <manifest file="MANIFEST.MF">
+          <attribute name="Built-By" value="${user.name}"/>
+          <section name="common">
+            <attribute name="Implementation-Title" value="common"/>
+            <attribute name="Implementation-Version" value="${version}.${svnversion}"/>
+
+          </section>
+          <section name="SVN INFO">
+            <attribute name="svninfo" value="${svninfo}"/>
+          </section>
+        </manifest>
+</target>
+
   
   <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
 </project>
