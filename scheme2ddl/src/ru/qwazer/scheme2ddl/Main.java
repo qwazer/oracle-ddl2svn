@@ -27,6 +27,7 @@ import oracle.jdbc.pool.OracleDataSource;
 public class Main {
 
     private static boolean justPrintUsage = false;
+    private static boolean justPrintVersion = false;
     private static String dbUrl = null;
     public static String outputDir = null;
     public static boolean includeStorageInfo = false;
@@ -39,6 +40,10 @@ public class Main {
         collectArgs(args);
         if (justPrintUsage) {
             printUsage();
+            return;
+        }
+        if (justPrintVersion){
+            printVersion();
             return;
         }
         Worker worker = (Worker) SpringUtils.getSpringBean("worker");
@@ -73,7 +78,10 @@ public class Main {
                 outputDir = args[i + 1];
                 i++;
                 createDir();
-            } else if (arg.startsWith("-")) {
+            } else if (arg.equals("-version")){
+               justPrintVersion = true;
+            }
+            else if (arg.startsWith("-")) {
                 // we don't have any more args to recognize!
                 String msg = "Unknown argument: " + arg;
                 System.err.println(msg);
@@ -114,7 +122,16 @@ public class Main {
 
         msg.append("  -output, -o            output dir" + lSep);
         msg.append("  -s,                    include storage info in DDL scripts (default no include)" + lSep);
+        msg.append("  -version,              print version info and exit" + lSep);
         System.out.println(msg.toString());
+    }
+
+    private static void printVersion() {
+        System.out.println(getVersion());
+    }
+
+    private static String getVersion(){
+        return Main.class.getPackage().getImplementationVersion();
     }
 
 }
