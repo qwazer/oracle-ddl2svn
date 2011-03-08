@@ -115,7 +115,6 @@ public class Main {
         msg.append("more config options in scheme2ddl.config.xml " + lSep);
         msg.append("Options: " + lSep);
         msg.append("  -help, -h              print this message" + lSep);
-       // msg.append("  -version               print the version information and exit" + lSep);
         // msg.append("  -verbose, -v           be extra verbose" + lSep);
         msg.append("  -url,                  DB connection URL" + lSep);
         msg.append("                         example: scott/tiger@localhost:1521:ORCL" + lSep);
