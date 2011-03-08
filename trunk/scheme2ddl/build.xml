@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="oracle-ddl2svn" default="all">
+  
+  
+  <property file="build.properties"/>
+
+  <!-- Compiler options -->
+
+  <patternset id="ignored.files">
+    <exclude name="**/.svn/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+
+  <!-- Project Libraries -->
+  
+  <path id="library.lib.classpath">
+    <pathelement location="${basedir}/lib/commons-logging.jar"/>
+    <pathelement location="${basedir}/lib/ojdbc14.jar"/>
+    <pathelement location="${basedir}/lib/spring-asm.jar"/>
+    <pathelement location="${basedir}/lib/spring-beans.jar"/>
+    <pathelement location="${basedir}/lib/spring-context.jar"/>
+    <pathelement location="${basedir}/lib/spring-core.jar"/>
+    <pathelement location="${basedir}/lib/spring-expression.jar"/>
+    <pathelement location="${basedir}/lib/spring-jdbc.jar"/>
+    <pathelement location="${basedir}/lib/spring-tx.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module scheme2ddl -->
+  
+  <dirname property="module.scheme2ddl.basedir" file="${ant.file}"/>
+  
+
+  
+
+  <property name="scheme2ddl.output.dir" value="${module.scheme2ddl.basedir}/out/production/scheme2ddl"/>
+
+
+  <path id="scheme2ddl.module.production.classpath">
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="scheme2ddl.runtime.production.module.classpath">
+    <pathelement location="${scheme2ddl.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="scheme2ddl.module.classpath">
+    <pathelement location="${scheme2ddl.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="scheme2ddl.runtime.module.classpath">
+    <pathelement location="${scheme2ddl.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.scheme2ddl">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.scheme2ddl">
+    <patternset refid="excluded.from.module.scheme2ddl"/>
+  </patternset>
+  
+  <path id="scheme2ddl.module.sourcepath">
+    <dirset dir="${module.scheme2ddl.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+
+  
+  <target name="compile" description="Compile module scheme2ddl">
+    <mkdir dir="${scheme2ddl.output.dir}"/>
+    <javac destdir="${scheme2ddl.output.dir}">
+
+      <classpath refid="scheme2ddl.module.production.classpath"/>
+      <src refid="scheme2ddl.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.scheme2ddl"/>
+    </javac>
+    
+    <copy todir="${scheme2ddl.output.dir}">
+      <fileset dir="${module.scheme2ddl.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+
+  <target name="clean.module.scheme2ddl" description="cleanup module">
+    <delete dir="${scheme2ddl.output.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.scheme2ddl, clean.artifact.dist" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.dist" value="${basedir}/out/artifacts/dist"/>
+    <property name="artifact.output.scheme2ddl:jar" value="${basedir}/out/artifacts/scheme2ddl_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.oracle-ddl2svn.zip" value="${artifacts.temp.dir}/oracle-ddl2svn.zip"/>
+    <property name="temp.jar.path.scheme2ddl.jar" value="${artifacts.temp.dir}/scheme2ddl.jar"/>
+  </target>
+  
+  <target name="clean.artifact.dist" description="clean dist artifact output">
+    <delete dir="${artifact.output.dist}"/>
+  </target>
+  
+  <target name="artifact.dist" depends="init.artifacts, artifact.scheme2ddl:jar" description="Build &apos;dist&apos; artifact">
+    <mkdir dir="${artifact.output.dist}"/>
+    <zip destfile="${temp.jar.path.oracle-ddl2svn.zip}">
+      <zipfileset dir="${artifact.temp.output.scheme2ddl:jar}"/>
+      <zipfileset dir="${basedir}/scripts"/>
+      <zipfileset file="${basedir}/scheme2ddl.config.xml"/>
+    </zip>
+    <copy file="${temp.jar.path.oracle-ddl2svn.zip}" tofile="${artifact.output.dist}/oracle-ddl2svn.zip"/>
+  </target>
+  
+  <target name="artifact.scheme2ddl:jar" depends="init.artifacts, compile" description="Build &apos;scheme2ddl:jar&apos; artifact">
+    <property name="artifact.temp.output.scheme2ddl:jar" value="${artifacts.temp.dir}/scheme2ddl_jar"/>
+    <mkdir dir="${artifact.temp.output.scheme2ddl:jar}"/>
+    <jar destfile="${temp.jar.path.scheme2ddl.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset file="${basedir}/src/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset file="${basedir}/src/META-INF/spring.schemas" prefix="META-INF"/>
+      <zipfileset file="${basedir}/src/META-INF/spring.tooling" prefix="META-INF"/>
+      <zipfileset file="${basedir}/src/META-INF/spring.handlers" prefix="META-INF"/>
+      <zipfileset file="${basedir}/src/META-INF/readme_about_spring" prefix="META-INF"/>
+      <zipfileset dir="${scheme2ddl.output.dir}"/>
+      <zipfileset src="${basedir}/lib/spring-core.jar"/>
+      <zipfileset src="${basedir}/lib/spring-jdbc.jar"/>
+      <zipfileset src="${basedir}/lib/spring-expression.jar"/>
+      <zipfileset src="${basedir}/lib/spring-tx.jar"/>
+      <zipfileset src="${basedir}/lib/spring-asm.jar"/>
+      <zipfileset src="${basedir}/lib/ojdbc14.jar"/>
+      <zipfileset src="${basedir}/lib/spring-beans.jar"/>
+      <zipfileset src="${basedir}/lib/commons-logging.jar"/>
+      <zipfileset src="${basedir}/lib/spring-context.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.scheme2ddl.jar}" tofile="${artifact.temp.output.scheme2ddl:jar}/scheme2ddl.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.dist, artifact.scheme2ddl:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.scheme2ddl:jar}"/>
+    <copy todir="${artifact.output.scheme2ddl:jar}">
+      <fileset dir="${artifact.temp.output.scheme2ddl:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+
+    <target name="update_manifest">
+        <property name="version" value="000.222"/>
+        <manifest file="MANIFEST.MF">
+          <attribute name="Built-By" value="${user.name}"/>
+          <section name="common">
+            <attribute name="Specification-Title" value="Example"/>
+            <attribute name="Specification-Version" value="${version}"/>
+            <attribute name="Specification-Vendor" value="Example Organization"/>
+            <attribute name="Implementation-Title" value="common"/>
+            <attribute name="Implementation-Version" value="${version}"/>
+            <attribute name="Implementation-Vendor" value="Example Corp."/>
+          </section>
+          <section name="common/class1.class">
+            <attribute name="Sealed" value="false"/>
+          </section>
+        </manifest>
+
+    </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
