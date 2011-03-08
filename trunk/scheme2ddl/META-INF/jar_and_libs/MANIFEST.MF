@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: spring-core.jar spring-jdbc.jar spring-expression.jar spri
- ng-tx.jar spring-asm.jar ojdbc14.jar spring-beans.jar commons-logging
- .jar spring-context.jar
-Main-Class: ru.qwazer.scheme2ddl.Main
-
