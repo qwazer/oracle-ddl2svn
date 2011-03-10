@@ -205,8 +205,8 @@
     <tstamp>
         <format property="builtat" pattern="MM/dd/yyyy hh:mm aa"/>
     </tstamp>
-    <exec executable="svnversion" outputproperty="svnversion"/>
-    <echo message="${svnversion}"/>
+    <exec executable="svnversion" outputproperty="svnRev"/>
+    <echo message="svn revision is ${svnRev}"/>
     <!--<exec executable="svn" outputproperty="svninfo">-->
         <!--<arg value="info"/>-->
     <!--</exec>-->
