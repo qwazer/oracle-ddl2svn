@@ -10,7 +10,7 @@ public class DDLFormatter {
 
     private Boolean noFormat ;
     private Boolean statementOnNewLine ;
-    private Boolean removeLastSlash;
+  //  private Boolean removeLastSlash;
 
 
     public void formatDDL(UserObject obj){
@@ -24,11 +24,11 @@ public class DDLFormatter {
             ddl = ddl.replace(";CREATE", "\n;CREATE");
         }
 
-        if (removeLastSlash){
-            if (ddl.endsWith("/")){
-                ddl = ddl.substring(0, ddl.lastIndexOf("/"));
-            }
-        }
+//        if (removeLastSlash){
+//            if (ddl.endsWith("/")){
+//                ddl = ddl.substring(0, ddl.lastIndexOf("/"));
+//            }
+//        }
         obj.setDdl(ddl);
     }
 
@@ -40,13 +40,13 @@ public class DDLFormatter {
         this.statementOnNewLine = statementOnNewLine;
     }
 
-    public Boolean getRemoveLastSlash() {
-        return removeLastSlash;
-    }
-
-    public void setRemoveLastSlash(Boolean removeLastSlash) {
-        this.removeLastSlash = removeLastSlash;
-    }
+//    public Boolean getRemoveLastSlash() {
+//        return removeLastSlash;
+//    }
+//
+//    public void setRemoveLastSlash(Boolean removeLastSlash) {
+//        this.removeLastSlash = removeLastSlash;
+//    }
 
     public Boolean getNoFormat() {
         return noFormat;
