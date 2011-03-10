@@ -28,6 +28,7 @@ public class Worker {
 
     private Dao dao;
     private FileWorker fileWorker;
+    private DDLFormatter ddlFormatter;
 
 
     public void work() {
@@ -36,6 +37,7 @@ public class Worker {
         System.out.println("get " + list.size() + " objects");
         for (UserObject obj : list){
             obj = dao.fillDDL(obj);
+            ddlFormatter.formatDDL(obj);
             fileWorker.save2file(obj);
             System.out.print(".");
         }
@@ -56,5 +58,9 @@ public class Worker {
 
     public FileWorker getFileWorker() {
         return fileWorker;
+    }
+
+    public void setDdlFormatter(DDLFormatter ddlFormatter) {
+        this.ddlFormatter = ddlFormatter;
     }
 }
