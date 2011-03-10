@@ -5,7 +5,7 @@
         >
 
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
-        <property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>
+        <!--<property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>-->
     </bean>
 
     <bean id="dao" class="ru.qwazer.scheme2ddl.Dao">
@@ -67,10 +67,21 @@
         <entry key="CONSTRAINTS_AS_ALTER" value="1"/>
     </util:map>
 
+    <!-- format option for DDL -->
+    <bean id="ddlFormatter" class="ru.qwazer.scheme2ddl.DDLFormatter">
+        <property name="noFormat" value="true"/>
+        <!-- Check it to true if you don't want apply formatting on DMBS_OUTPUT,
+         Formatting option can be unsafe because it based on regexp rules -->
+        <property name="removeLastSlash" value="true"/>
+        <property name="statementOnNewLine" value="true"/>
+    </bean>
+
     <bean id="worker" class="ru.qwazer.scheme2ddl.Worker">
         <property name="dao" ref="dao"/>
         <property name="fileWorker" ref="fileWorker"/>
+        <property name="ddlFormatter" ref="ddlFormatter"/>
     </bean>
+
 
 
 </beans>
