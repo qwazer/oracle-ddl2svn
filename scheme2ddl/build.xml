@@ -146,8 +146,7 @@
   <target name="artifact.scheme2ddl:jar" depends="init.artifacts, compile" description="Build &apos;scheme2ddl:jar&apos; artifact">
     <property name="artifact.temp.output.scheme2ddl:jar" value="${artifacts.temp.dir}/scheme2ddl_jar"/>
     <mkdir dir="${artifact.temp.output.scheme2ddl:jar}"/>
-    <jar destfile="${temp.jar.path.scheme2ddl.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
-      <zipfileset file="${basedir}/src/META-INF/MANIFEST.MF" prefix="META-INF"/>
+    <jar destfile="${temp.jar.path.scheme2ddl.jar}" duplicate="preserve" manifest="src/META-INF/MANIFEST.MF">
       <zipfileset file="${basedir}/src/META-INF/spring.schemas" prefix="META-INF"/>
       <zipfileset file="${basedir}/src/META-INF/spring.tooling" prefix="META-INF"/>
       <zipfileset file="${basedir}/src/META-INF/spring.handlers" prefix="META-INF"/>
