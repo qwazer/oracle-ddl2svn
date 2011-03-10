@@ -6,7 +6,7 @@
 
 <!-- software revision number -->
 
-<property name="svnRev" value="90"/>
+<property name="svnRev" value="93"/>
 <property name="version" value="0.0.${svnRev}.BETA"/>
 
   <!-- Compiler options -->
@@ -206,20 +206,21 @@
         <format property="builtat" pattern="MM/dd/yyyy hh:mm aa"/>
     </tstamp>
     <exec executable="svnversion" outputproperty="svnversion"/>
-    <exec executable="svn" outputproperty="svninfo">
-        <arg value="info"/>
-    </exec>
-        <manifest file="MANIFEST.MF">
-          <attribute name="Built-By" value="${user.name}"/>
-          <section name="common">
-            <attribute name="Implementation-Title" value="common"/>
-            <attribute name="Implementation-Version" value="${version}.${svnversion}"/>
+    <echo message="${svnversion}"/>
+    <!--<exec executable="svn" outputproperty="svninfo">-->
+        <!--<arg value="info"/>-->
+    <!--</exec>-->
+        <!--<manifest file="MANIFEST.MF">-->
+          <!--<attribute name="Built-By" value="${user.name}"/>-->
+          <!--<section name="common">-->
+            <!--<attribute name="Implementation-Title" value="common"/>-->
+            <!--<attribute name="Implementation-Version" value="${version}.${svnversion}"/>-->
 
-          </section>
-          <section name="SVN INFO">
-            <attribute name="svninfo" value="${svninfo}"/>
-          </section>
-        </manifest>
+          <!--</section>-->
+          <!--<section name="SVN INFO">-->
+            <!--<attribute name="svninfo" value="${svninfo}"/>-->
+          <!--</section>-->
+        <!--</manifest>-->
 </target>
 
   
