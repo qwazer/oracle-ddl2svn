@@ -6,7 +6,7 @@
 
 <!-- software revision number -->
 
-<property name="svnRev" value="85"/>
+<property name="svnRev" value="90"/>
 <property name="version" value="0.0.${svnRev}.BETA"/>
 
   <!-- Compiler options -->
