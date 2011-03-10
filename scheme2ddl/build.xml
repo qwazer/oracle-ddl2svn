@@ -6,8 +6,8 @@
 
     <!-- software revision number -->
 
-    <property name="svnRev" value="93"/>
-    <property name="version" value="0.0.${svnRev}.BETA"/>
+    <!--<property name="svnRev" value=""/>-->
+    <!--<property name="version" value="0.0.${svnRev}.BETA"/>-->
 
     <!-- Compiler options -->
 
@@ -147,7 +147,7 @@
               tofile="${artifact.output.dist}/oracle-ddl2svn.${version}.zip"/>
     </target>
 
-    <target name="artifact.scheme2ddl:jar" depends="init.artifacts, compile"
+    <target name="artifact.scheme2ddl:jar" depends="init.artifacts, compile, buildinfo"
             description="Build &apos;scheme2ddl:jar&apos; artifact">
         <property name="artifact.temp.output.scheme2ddl:jar" value="${artifacts.temp.dir}/scheme2ddl_jar"/>
         <mkdir dir="${artifact.temp.output.scheme2ddl:jar}"/>
@@ -210,6 +210,7 @@
         <!--<exec executable="svn" outputproperty="svninfo">-->
         <!--<arg value="info"/>-->
         <!--</exec>-->
+        <property name="version" value="0.0.${svnRev}.BETA"/>
         <manifest file="./src/META-INF/MANIFEST.MF" >
             <attribute name="Main-Class" value="ru.qwazer.scheme2ddl.Main"/>
             <attribute name="Implementation-Version" value="${version}"/>
