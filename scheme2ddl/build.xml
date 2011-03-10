@@ -4,6 +4,11 @@
   
   <property file="build.properties"/>
 
+<!-- software revision number -->
+
+<property name="svnRev" value="85"/>
+<property name="version" value="0.0.${svnRev}.BETA"/>
+
   <!-- Compiler options -->
 
   <patternset id="ignored.files">
@@ -195,10 +200,6 @@
     </target>
 
 
-<!-- software revision number -->
-
-<property name="svnRev" value="85"/>
-<property name="version" value="0.0.${svnRev}.BETA"/>
 
 <target name="buildinfo">
     <tstamp>
