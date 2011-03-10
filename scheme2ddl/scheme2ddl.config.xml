@@ -69,7 +69,7 @@
 
     <!-- format option for DDL -->
     <bean id="ddlFormatter" class="ru.qwazer.scheme2ddl.DDLFormatter">
-        <property name="noFormat" value="true"/>
+        <property name="noFormat" value="false"/>
         <!-- Check it to true if you don't want apply formatting on DMBS_OUTPUT,
          Formatting option can be unsafe because it based on regexp rules -->
         <property name="removeLastSlash" value="true"/>
