@@ -140,7 +140,7 @@
       <zipfileset dir="${basedir}/scripts"/>
       <zipfileset file="${basedir}/scheme2ddl.config.xml"/>
     </zip>
-    <copy file="${temp.jar.path.oracle-ddl2svn.zip}" tofile="${artifact.output.dist}/oracle-ddl2svn.zip"/>
+    <copy file="${temp.jar.path.oracle-ddl2svn.zip}" tofile="${artifact.output.dist}/oracle-ddl2svn.${version}.zip"/>
   </target>
   
   <target name="artifact.scheme2ddl:jar" depends="init.artifacts, compile" description="Build &apos;scheme2ddl:jar&apos; artifact">
@@ -196,7 +196,9 @@
 
 
 <!-- software revision number -->
-<property name="version" value="0.0"/>
+
+<property name="svnRev" value="85"/>
+<property name="version" value="0.0.${svnRev}.BETA"/>
 
 <target name="buildinfo">
     <tstamp>
