@@ -41,40 +41,22 @@ public class FileWorker {
 
             String filePath = createFullFileName(obj);
             FileUtils.writeStringToFile(new File(filePath), obj.getDdl());
-//            BufferedWriter out = new BufferedWriter(
-//                    new FileWriter(filePath));
-//
-//            out.write(obj.getDdl());
-//            out.close();
-            System.out.println("saved " + obj.getType().toLowerCase() + " "+ obj.getName().toLowerCase() + " to file " + filePath);
+            System.out.println("saved " + obj.getType().toLowerCase() + " " + obj.getName().toLowerCase() + " to file " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //todo fix issue 2,3,4    //todo refactor
-    public String createFullFileName(UserObject obj) throws IOException{
+    public String createFullFileName(UserObject obj) throws IOException {
         String res = "";
-        if (sortByDirectory){
-           //String dirPath = outputPath + obj.getTypePlural();
-           // createDirIfNotExist(dirPath);
-
-           res = obj.getTypePlural() + "\\" + obj.getName4Filename() + ".sql";
-        }
-        else {
+        if (sortByDirectory) {
+            res = obj.getTypePlural() + "\\" + obj.getName4Filename() + ".sql";
+        } else {
             res = obj.getName4Filename() + "." + obj.getType() + ".sql";
         }
-        res =  outputPath + res;
+        res = outputPath + res;
         return FilenameUtils.separatorsToSystem(res);
     }
-
-//    private void createDirIfNotExist(String dirPath) throws IOException {
-//        File dir = new File(dirPath);
-//        if (!dir.exists() && !dir.mkdirs()) {
-//             throw new IOException("Unable to create " + dir.getAbsolutePath());
-//        }
-//    }
-
 
     public void setSortByDirectory(Boolean sortByDirectory) {
         this.sortByDirectory = sortByDirectory;
