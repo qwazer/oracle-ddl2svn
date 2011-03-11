@@ -46,7 +46,7 @@ public class FileWorker {
 //
 //            out.write(obj.getDdl());
 //            out.close();
-            System.out.println("saved " + obj.getName() + " to file " + filePath);
+            System.out.println("saved " + obj.getType().toLowerCase() + " "+ obj.getName().toLowerCase() + " to file " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
