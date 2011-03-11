@@ -44,6 +44,7 @@
         <pathelement location="${basedir}/lib/spring-expression.jar"/>
         <pathelement location="${basedir}/lib/spring-jdbc.jar"/>
         <pathelement location="${basedir}/lib/spring-tx.jar"/>
+        <pathelement location="${basedir}/lib/commons-io-2.0.1.jar"/>
     </path>
 
     <!-- Modules -->
@@ -151,7 +152,7 @@
             description="Build &apos;scheme2ddl:jar&apos; artifact">
         <property name="artifact.temp.output.scheme2ddl:jar" value="${artifacts.temp.dir}/scheme2ddl_jar"/>
         <mkdir dir="${artifact.temp.output.scheme2ddl:jar}"/>
-        <jar destfile="${temp.jar.path.scheme2ddl.jar}" duplicate="preserve" manifest="src/META-INF/MANIFEST.MF">
+        <jar destfile="${temp.jar.path.scheme2ddl.jar}" duplicate="preserve">
             <zipfileset file="${basedir}/src/META-INF/spring.schemas" prefix="META-INF"/>
             <zipfileset file="${basedir}/src/META-INF/spring.tooling" prefix="META-INF"/>
             <zipfileset file="${basedir}/src/META-INF/spring.handlers" prefix="META-INF"/>
@@ -167,6 +168,11 @@
             <zipfileset src="${basedir}/lib/commons-logging.jar"/>
             <zipfileset src="${basedir}/lib/spring-context.jar"/>
             <zipfileset src="${basedir}/lib/commons-io-2.0.1.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="ru.qwazer.scheme2ddl.Main"/>
+                <attribute name="Implementation-Version" value="${version}"/>
+                <attribute name="Built-By" value="${user.name}"/>
+            </manifest>
         </jar>
         <copy file="${temp.jar.path.scheme2ddl.jar}" tofile="${artifact.temp.output.scheme2ddl:jar}/scheme2ddl.jar"/>
     </target>
@@ -182,43 +188,13 @@
         <delete dir="${artifacts.temp.dir}"/>
     </target>
 
-    <target name="update_manifest">
-        <property name="version" value="000.222"/>
-        <manifest file="MANIFEST.MF">
-            <attribute name="Built-By" value="${user.name}"/>
-            <section name="common">
-                <attribute name="Specification-Title" value="Example"/>
-                <attribute name="Specification-Version" value="${version}"/>
-                <attribute name="Specification-Vendor" value="Example Organization"/>
-                <attribute name="Implementation-Title" value="common"/>
-                <attribute name="Implementation-Version" value="${version}"/>
-                <attribute name="Implementation-Vendor" value="Example Corp."/>
-            </section>
-            <section name="common/class1.class">
-                <attribute name="Sealed" value="false"/>
-            </section>
-        </manifest>
-
-    </target>
-
-
     <target name="buildinfo">
-        <tstamp>
-            <format property="builtat" pattern="MM/dd/yyyy hh:mm aa"/>
-        </tstamp>
+        <!--<tstamp>-->
+        <!--<format property="builtat" pattern="MM/dd/yyyy hh:mm aa"/>-->
+        <!--</tstamp>-->
         <exec executable="svnversion" outputproperty="svnRev"/>
         <echo message="svn revision is ${svnRev}"/>
-        <!--<exec executable="svn" outputproperty="svninfo">-->
-        <!--<arg value="info"/>-->
-        <!--</exec>-->
         <property name="version" value="0.0.${svnRev}.BETA"/>
-        <manifest file="./src/META-INF/MANIFEST.MF" >
-            <attribute name="Main-Class" value="ru.qwazer.scheme2ddl.Main"/>
-            <attribute name="Implementation-Version" value="${version}"/>
-            <attribute name="Built-By" value="${user.name}"/>
-
-
-        </manifest>
     </target>
 
 
