@@ -166,6 +166,7 @@
             <zipfileset src="${basedir}/lib/spring-beans.jar"/>
             <zipfileset src="${basedir}/lib/commons-logging.jar"/>
             <zipfileset src="${basedir}/lib/spring-context.jar"/>
+            <zipfileset src="${basedir}/lib/commons-io-2.0.1.jar"/>
         </jar>
         <copy file="${temp.jar.path.scheme2ddl.jar}" tofile="${artifact.temp.output.scheme2ddl:jar}/scheme2ddl.jar"/>
     </target>

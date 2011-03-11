@@ -16,6 +16,8 @@
 
 package ru.qwazer.scheme2ddl;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -60,7 +62,8 @@ public class FileWorker {
         else {
             res = obj.getName4Filename() + "." + obj.getType() + ".sql";
         }
-        return outputPath + res;
+        res =  outputPath + res;
+        return FilenameUtils.separatorsToSystem(res);
     }
 
     private void createDirIfNotExist(String dirPath) throws IOException {
@@ -78,4 +81,6 @@ public class FileWorker {
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
     }
+
+
 }
