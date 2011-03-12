@@ -5,7 +5,7 @@
         >
 
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
-
+        <property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>
     </bean>
 
     <bean id="dao" class="ru.qwazer.scheme2ddl.Dao">
