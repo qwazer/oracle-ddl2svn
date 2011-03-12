@@ -145,10 +145,10 @@
             <zipfileset file="${basedir}/scheme2ddl.config.xml"/>
         </zip>
         <copy file="${temp.jar.path.oracle-ddl2svn.zip}"
-              tofile="${artifact.output.dist}/oracle-ddl2svn.${version}.zip"/>
+              tofile="${artifact.output.dist}/${ant.project.name}-v${base.version}.zip"/>
     </target>
 
-    <target name="artifact.scheme2ddl:jar" depends="init.artifacts, compile, buildinfo"
+    <target name="artifact.scheme2ddl:jar" depends="init.artifacts, compile, version"
             description="Build &apos;scheme2ddl:jar&apos; artifact">
         <property name="artifact.temp.output.scheme2ddl:jar" value="${artifacts.temp.dir}/scheme2ddl_jar"/>
         <mkdir dir="${artifact.temp.output.scheme2ddl:jar}"/>
@@ -170,8 +170,14 @@
             <zipfileset src="${basedir}/lib/commons-io-2.0.1.jar"/>
             <manifest>
                 <attribute name="Main-Class" value="ru.qwazer.scheme2ddl.Main"/>
-                <attribute name="Implementation-Version" value="${version}"/>
+                <attribute name="Implementation-Version" value="${this.version}"/>
                 <attribute name="Built-By" value="${user.name}"/>
+                <section name="SVN INFO">
+                    <attribute name="svn.url" value="${svn.url}"/>
+                    <attribute name="svn.revision" value="${svn.revision}"/>
+                    <attribute name="svn.author" value="${svn.author}"/>
+                    <attribute name="svn.commited.date" value="${svn.commited.date}"/>
+                </section>
             </manifest>
         </jar>
         <copy file="${temp.jar.path.scheme2ddl.jar}" tofile="${artifact.temp.output.scheme2ddl:jar}/scheme2ddl.jar"/>
@@ -188,13 +194,69 @@
         <delete dir="${artifacts.temp.dir}"/>
     </target>
 
-    <target name="buildinfo">
-        <!--<tstamp>-->
-        <!--<format property="builtat" pattern="MM/dd/yyyy hh:mm aa"/>-->
-        <!--</tstamp>-->
-        <exec executable="svnversion" outputproperty="svnRev"/>
-        <echo message="svn revision is ${svnRev}"/>
-        <property name="version" value="0.0.${svnRev}.BETA"/>
+
+    <target name="version" depends="svn-work" description="Print current version">
+        <property file="build.version"/>
+        <fail unless="version.major" message="Invalid contents for file 'build.version', missing 'version.major'."/>
+        <fail unless="version.minor" message="Invalid contents for file 'build.version', missing 'version.minor'."/>
+
+        <property name="base.version" value="${version.major}.${version.minor}"/>
+
+
+        <condition property="this.version" value="${base.version}" else="${base.version},SVN:${svn.revision}">
+            <!--suppress AntResolveInspection -->
+            <istrue value="${skip.svn}"/>
+        </condition>
+
+        <echo></echo>
+        <echo message=" ${ant.project.name} ${this.version}"/>
+        <echo></echo>
+
+    </target>
+
+
+    <target name="minor" description="Release minor: increment project version 'minor' component">
+      <propertyfile file="build.version">
+        <entry key="version.minor" type="int" operation="+" value="1"/>
+      </propertyfile>
+      <antcall target="version"/>
+    </target>
+
+    <target name="major" description="Release major: increment project version 'major' component.  Set 'minor' to zero.">
+
+      <propertyfile file="build.version">
+        <entry key="version.major" type="int" operation="+" value="1"/>
+        <entry key="version.minor" type="int" value="0"/>
+      </propertyfile>
+      <antcall target="version"/>
+    </target>
+
+    <target name="svn-work" unless="${skip.svn}">
+        <typedef resource="com/googlecode/svntask/svntask.xml" classpath="C:\Apache\svntask-1.0.8\svntask.jar">
+            <classpath>
+                <fileset dir="C:\Apache\svntask-1.0.8/lib">
+                    <include name="svnkit.jar"/>
+                    <include name="svntask.jar"/>
+                </fileset>
+            </classpath>
+        </typedef>
+
+        <!-- Do an update first to make sure you have the latest version -->
+        <svn>
+            <update path="${basedir}" force="true" recursive="true"/>
+        </svn>
+
+        <svn>
+            <info path="${basedir}"
+                  revisionProperty="svn.revision"
+                  urlproperty="svn.url"
+                  authorproperty="svn.author"
+                  committeddateproperty="svn.commited.date"
+                    />
+        </svn>
+        <echo message="svn url is ${svn.url}"></echo>
+        <echo message="svn author is ${svn.author}"></echo>
+        <echo message="svn commited date is ${svn.commited.date}"></echo>
     </target>
 
 
