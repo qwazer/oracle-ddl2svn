@@ -65,10 +65,6 @@ public class FileWorker {
         this.outputPath = outputPath;
     }
 
-    public String getFileExtension() {
-        return fileExtension;
-    }
-
     public void setFileExtension(String fileExtension) {
         this.fileExtension = fileExtension;
     }
