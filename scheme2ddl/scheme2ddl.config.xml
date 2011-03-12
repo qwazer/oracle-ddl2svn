@@ -5,7 +5,7 @@
         >
 
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
-        <!--<property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>-->
+
     </bean>
 
     <bean id="dao" class="ru.qwazer.scheme2ddl.Dao">
@@ -35,6 +35,26 @@
                         <value>OBJECT_GRANT</value>
                     </set>
                 </entry>
+                <entry key="FUNCTION">
+                    <set>
+                        <value>OBJECT_GRANT</value>
+                    </set>
+                </entry>
+                <entry key="PROCEDURE">
+                    <set>
+                        <value>OBJECT_GRANT</value>
+                    </set>
+                </entry>
+                <entry key="PACKAGE">
+                    <set>
+                        <value>OBJECT_GRANT</value>
+                    </set>
+                </entry>
+                <entry key="SYNONYM">
+                    <set>
+                        <value>OBJECT_GRANT</value>
+                    </set>
+                </entry>
             </map>
         </property>
         <property name="dataSource" ref="dataSource"/>
@@ -48,19 +68,22 @@
         <value>TABLE</value>
         <value>VIEW</value>
         <value>FUNCTION</value>
+        <value>PROCEDURE</value>
         <value>MATERIALIZED VIEW</value>
         <value>TRIGGER</value>
         <value>PACKAGE</value>
         <value>TYPE</value>
+        <value>SEQUENCE</value>
+        <value>SYNONYM</value>
     </util:set>
 
     <!-- output options -->
     <bean id="fileWorker" class="ru.qwazer.scheme2ddl.FileWorker">
-        <property name="outputPath" value="D:/temp/oracle-ddl2svn/CTK/DEV/"/>
+        <property name="outputPath" value="D:/temp/oracle-ddl2svn/TEST/"/>
         <property name="sortByDirectory" value="true"/>
     </bean>
 
-   <!-- http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm#BGBJBFGE -->
+    <!-- http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm#BGBJBFGE -->
     <util:map id="transformParams_for_dbms_metadata">
         <entry key="SEGMENT_ATTRIBUTES" value="0"/>
         <entry key="SQLTERMINATOR" value="1"/>
@@ -72,7 +95,6 @@
         <property name="noFormat" value="false"/>
         <!-- Check it to true if you don't want apply formatting on DMBS_OUTPUT,
          Formatting option can be unsafe because it based on regexp rules -->
-        <property name="removeLastSlash" value="true"/>
         <property name="statementOnNewLine" value="true"/>
     </bean>
 
@@ -81,7 +103,6 @@
         <property name="fileWorker" ref="fileWorker"/>
         <property name="ddlFormatter" ref="ddlFormatter"/>
     </bean>
-
 
 
 </beans>
