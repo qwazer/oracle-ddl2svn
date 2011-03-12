@@ -31,6 +31,7 @@ import java.io.IOException;
 public class FileWorker {
 
     private String outputPath;
+    private String fileExtension;
     private Boolean sortByDirectory;
 
 
@@ -48,9 +49,9 @@ public class FileWorker {
     public String createFullFileName(UserObject obj) throws IOException {
         String res = "";
         if (sortByDirectory) {
-            res = obj.getTypePlural() + "\\" + obj.getName4Filename() + ".sql";
+            res = obj.getTypePlural() + "\\" + obj.getName4Filename() + "." + fileExtension;
         } else {
-            res = obj.getName4Filename() + "." + obj.getType() + ".sql";
+            res = obj.getName4Filename() + "." + obj.getType() + "." + fileExtension;
         }
         res = outputPath + res;
         return FilenameUtils.separatorsToSystem(res);
@@ -64,5 +65,12 @@ public class FileWorker {
         this.outputPath = outputPath;
     }
 
+    public String getFileExtension() {
+        return fileExtension;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
 
 }

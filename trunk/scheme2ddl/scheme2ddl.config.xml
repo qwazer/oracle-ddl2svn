@@ -81,6 +81,7 @@
     <bean id="fileWorker" class="ru.qwazer.scheme2ddl.FileWorker">
         <property name="outputPath" value="D:/temp/oracle-ddl2svn/TEST/"/>
         <property name="sortByDirectory" value="true"/>
+        <property name="fileExtension" value="sql"/>
     </bean>
 
     <!-- http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm#BGBJBFGE -->
