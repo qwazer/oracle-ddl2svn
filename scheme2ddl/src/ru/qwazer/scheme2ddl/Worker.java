@@ -39,7 +39,7 @@ public class Worker {
             obj = dao.fillDDL(obj);
             ddlFormatter.formatDDL(obj);
             fileWorker.save2file(obj);
-            System.out.print(".");
+           // System.out.print(".");
         }
         System.out.println(" done " );
     }
