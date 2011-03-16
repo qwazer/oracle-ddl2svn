@@ -173,10 +173,10 @@
                 <attribute name="Implementation-Version" value="${this.version}"/>
                 <attribute name="Built-By" value="${user.name}"/>
                 <section name="SVN INFO">
-                    <attribute name="svn.url" value="${svn.url}"/>
-                    <attribute name="svn.revision" value="${svn.revision}"/>
-                    <attribute name="svn.author" value="${svn.author}"/>
-                    <attribute name="svn.commited.date" value="${svn.commited.date}"/>
+                    <attribute name="svn-url" value="${svn.url}"/>
+                    <attribute name="svn-revision" value="${svn.revision}"/>
+                    <attribute name="svn-author" value="${svn.author}"/>
+                    <attribute name="svn-commited-date" value="${svn.commited.date}"/>
                 </section>
             </manifest>
         </jar>
