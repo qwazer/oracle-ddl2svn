@@ -174,9 +174,9 @@
                 <attribute name="Built-By" value="${user.name}"/>
                 <section name="SVN INFO">
                     <attribute name="svn-url" value="${svn.url}"/>
-                    <attribute name="svn-revision" value="${svn.revision}"/>
+                    <attribute name="svn-revision" value="${svn.rev}"/>
                     <attribute name="svn-author" value="${svn.author}"/>
-                    <attribute name="svn-commited-date" value="${svn.commited.date}"/>
+                    <attribute name="svn-commited-date" value="${svn.lastDate}"/>
                 </section>
             </manifest>
         </jar>
@@ -203,14 +203,13 @@
         <property name="base.version" value="${version.major}.${version.minor}"/>
 
 
-        <condition property="this.version" value="${base.version}" else="${base.version},SVN:${svn.revision}">
+        <condition property="this.version" value="${base.version}" else="${base.version},SVN:${svn.rev}">
             <!--suppress AntResolveInspection -->
             <istrue value="${skip.svn}"/>
         </condition>
 
-        <echo></echo>
         <echo message=" ${ant.project.name} ${this.version}"/>
-        <echo></echo>
+
 
     </target>
 
@@ -231,32 +230,66 @@
       <antcall target="version"/>
     </target>
 
+
+
+
+
+
+
+
     <target name="svn-work" unless="${skip.svn}">
-        <typedef resource="com/googlecode/svntask/svntask.xml" classpath="C:\Apache\svntask-1.0.8\svntask.jar">
-            <classpath>
-                <fileset dir="C:\Apache\svntask-1.0.8/lib">
-                    <include name="svnkit.jar"/>
-                    <include name="svntask.jar"/>
-                </fileset>
-            </classpath>
-        </typedef>
 
-        <!-- Do an update first to make sure you have the latest version -->
-        <svn>
-            <update path="${basedir}" force="true" recursive="true"/>
-        </svn>
 
-        <svn>
-            <info path="${basedir}"
-                  revisionProperty="svn.revision"
-                  urlproperty="svn.url"
-                  authorproperty="svn.author"
-                  committeddateproperty="svn.commited.date"
-                    />
-        </svn>
+        <path id="svnant.classpath">
+            <pathelement location="./antlib/svnant.jar"/>
+            <pathelement location="./antlib/svnkit.jar"/>
+            <pathelement location="./antlib/svnClientAdapter.jar"/>
+        </path>
+
+        <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svnant.classpath" />
+
+
+        <!--<svn javahl="false" svnkit="true">-->
+            <!--<update dir="${basedir}"/>-->
+        <!--</svn>-->
+
+
+
+        <!--<typedef resource="com/googlecode/svntask/svntask.xml" classpath="C:\Apache\svntask-1.0.8\svntask.jar">-->
+            <!--<classpath>-->
+                <!--<fileset dir="C:\Apache\svntask-1.0.8/lib">-->
+                    <!--<include name="svnkit.jar"/>-->
+                    <!--<include name="svntask.jar"/>-->
+                <!--</fileset>-->
+            <!--</classpath>-->
+        <!--</typedef>-->
+
+
+        <!--&lt;!&ndash; Do an update first to make sure you have the latest version &ndash;&gt;-->
+        <!--<svn >-->
+            <!--<update path="${basedir}" force="true" recursive="true"/>-->
+        <!--</svn>-->
+
+        <!--<svn>-->
+            <!--<info path="${basedir}"-->
+                  <!--revisionProperty="svn.revision"-->
+                  <!--urlproperty="svn.url"-->
+                  <!--authorproperty="svn.author"-->
+                  <!--committeddateproperty="svn.commited.date"-->
+                    <!--/>-->
+        <!--</svn>-->
+
+        <svn javahl="false" svnkit="true">
+            <info target="." propprefix="svn.">
+
+                </info>
+
+
+            </svn>
+        <echoproperties/>
         <echo message="svn url is ${svn.url}"></echo>
         <echo message="svn author is ${svn.author}"></echo>
-        <echo message="svn commited date is ${svn.commited.date}"></echo>
+        <echo message="svn commited date is ${svn.lastDate}"></echo>
     </target>
 
 
