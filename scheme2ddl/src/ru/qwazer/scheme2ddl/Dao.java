@@ -39,6 +39,8 @@ public class Dao extends JdbcDaoSupport {
     private Map<String, Set<String>> map;
     private Map<String,String> transformParams;
     private Set<String> filterTypes;
+    private int objectsAge;
+
 
     public UserObject fillDDL(UserObject obj) {
         String ddl = "";
@@ -167,6 +169,9 @@ public class Dao extends JdbcDaoSupport {
     private List<UserObject> getUserObjectListPrivate(String whereAdd) {
 
         String select_sql = "select t.object_name, t.object_type from user_objects t where t.generated='N' ";
+        if (objectsAge>0){
+            select_sql += " and last_ddl_time>=sysdate-"+objectsAge + " ";
+        }
         final String sql;
         if (whereAdd != null && !whereAdd.equals("")) {
             sql = select_sql + whereAdd;
@@ -215,6 +220,14 @@ public class Dao extends JdbcDaoSupport {
 
     public void setFilterTypes(Set<String> types) {
         this.filterTypes = types;
+    }
+
+     public int getLast_ddl_time_age() {
+        return objectsAge;
+    }
+
+    public void setLast_ddl_time_age(int howLong) {
+        this.objectsAge = howLong;
     }
 
 

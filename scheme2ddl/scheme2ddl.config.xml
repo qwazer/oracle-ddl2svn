@@ -60,6 +60,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="transformParams" ref="transformParams_for_dbms_metadata"/>
         <property name="filterTypes" ref="types_for_getting_DDL"/>
+        <property name="last_ddl_time_age" value="10"/>
     </bean>
 
     <!-- todo add all types of user objects -->
@@ -73,8 +74,8 @@
         <value>TRIGGER</value>
         <value>PACKAGE</value>
         <value>TYPE</value>
-        <value>SEQUENCE</value>
-        <value>SYNONYM</value>
+        <!--<value>SEQUENCE</value>-->
+        <!--<value>SYNONYM</value>-->
     </util:set>
 
     <!-- output options -->
