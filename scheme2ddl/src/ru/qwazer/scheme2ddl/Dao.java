@@ -24,10 +24,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -133,7 +130,25 @@ public class Dao extends JdbcDaoSupport {
             }
             whereAdd += "'')";
         }
-        return getUserObjectListPrivate(whereAdd);
+         List<UserObject> list = getUserObjectListPrivate(whereAdd);
+          filterFromSystemTypes(list);
+        return list;
+    }
+
+    /**
+     * For removing system types http://www.sql.ru/forum/actualthread.aspx?bid=3&tid=542661&hl=
+     * @param list
+     */
+    private void filterFromSystemTypes(List<UserObject> list) {
+        List<UserObject> removed= new ArrayList<UserObject>();
+        for (UserObject obj : list ){
+            if (obj.getType().equalsIgnoreCase("TYPE")
+                    && obj.getName().startsWith("SYSTP")
+                    && obj.getName().endsWith("==")){
+                removed.add(obj);
+            }
+        }
+        list.removeAll(removed);
     }
 
 
