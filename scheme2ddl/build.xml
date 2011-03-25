@@ -286,7 +286,7 @@
 
 
             </svn>
-        <echoproperties/>
+        <!--<echoproperties/>-->
         <echo message="svn url is ${svn.url}"></echo>
         <echo message="svn author is ${svn.author}"></echo>
         <echo message="svn commited date is ${svn.lastDate}"></echo>
