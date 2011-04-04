@@ -23,8 +23,8 @@ rem delete all files from output directory exept system files
 rem this command must keep on disk svn meta information stored in .svn folders
 del %OUTPUT_DIR% /Q /S /A-S
 java -jar scheme2ddl.jar -url %DB_URL% -output %OUTPUT_DIR%
-rem call autocommit %OUTPUT_DIR%
+rem call autocommit %OUTPUT_DIR% 
 for /f "tokens=2*" %%i in ('svn status %OUTPUT_DIR% ^| find "?"') do svn add "%%i"
 for /f "tokens=2*" %%i in ('svn status %OUTPUT_DIR% ^| find "!"') do svn delete "%%i"
 rem svn commit -m %COMMIT_MESSAGE% %OUTPUT_DIR%
-svn commit -m %COMMIT_MESSAGE% %OUTPUT_DIR%  --non-interactive --username %SVN_USER% --password %SVN_PASS%
+svn commit -m %COMMIT_MESSAGE% %OUTPUT_DIR%  --non-interactive --no-auth-cache --username %SVN_USER% --password %SVN_PASS%
