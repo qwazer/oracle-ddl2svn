@@ -141,7 +141,7 @@
         <mkdir dir="${artifact.output.dist}"/>
         <zip destfile="${temp.jar.path.oracle-ddl2svn.zip}">
             <zipfileset dir="${artifact.temp.output.scheme2ddl:jar}"/>
-            <zipfileset dir="${basedir}/scripts"/>
+            <zipfileset dir="${basedir}/scripts" excludes="**experimental/**"/>
             <zipfileset file="${basedir}/scheme2ddl.config.xml"/>
         </zip>
         <copy file="${temp.jar.path.oracle-ddl2svn.zip}"
