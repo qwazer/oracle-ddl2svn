@@ -60,7 +60,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="transformParams" ref="transformParams_for_dbms_metadata"/>
         <property name="filterTypes" ref="types_for_getting_DDL"/>
-        <property name="last_ddl_time_age" value="10"/>
+        <property name="last_ddl_time_age" value="0"/>
     </bean>
 
     <!-- todo add all types of user objects -->
