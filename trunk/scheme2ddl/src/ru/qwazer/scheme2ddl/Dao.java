@@ -209,6 +209,19 @@ public class Dao extends JdbcDaoSupport {
         }
     }
 
+    /**
+     * Test db connection
+     * @return
+     */
+    public boolean connectionAvailable (){
+        try {
+            getJdbcTemplate().queryForInt("select 1 from dual");
+        } catch (DataAccessException e) {
+            return false;
+        }
+        return true;
+    }
+
     public void setMap(Map<String, Set<String>> map) {
         this.map = map;
     }
