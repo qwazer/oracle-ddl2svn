@@ -18,6 +18,8 @@ package ru.qwazer.scheme2ddl;
 
 import oracle.jdbc.pool.OracleDataSource;
 
+import java.sql.SQLException;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Reshetnikov AV resheto@gmail.com
@@ -28,6 +30,7 @@ public class Main {
 
     private static boolean justPrintUsage = false;
     private static boolean justPrintVersion = false;
+    private static boolean justTestConnection = false;
     private static String dbUrl = null;
     public static String outputDir = null;
     public static boolean includeStorageInfo = false;
@@ -42,27 +45,44 @@ public class Main {
             printUsage();
             return;
         }
-        if (justPrintVersion){
+        if (justPrintVersion) {
             printVersion();
             return;
         }
         Worker worker = (Worker) SpringUtils.getSpringBean("worker");
-        if (dbUrl!=null || outputDir!=null || includeStorageInfo){
+        if (dbUrl != null || outputDir != null || includeStorageInfo) {
             modifyWorkerConfig(worker);
         }
-        worker.work();
+        if (justTestConnection) {
+            testDBConnection(worker);
+        } else
+            worker.work();
 
     }
 
-    private static void modifyWorkerConfig(Worker worker) throws Exception{
-         if (dbUrl!=null){
+    private static void modifyWorkerConfig(Worker worker) throws Exception {
+        if (dbUrl != null) {
             OracleDataSource ds = new OracleDataSource();
-            ds.setURL("jdbc:oracle:thin:"+dbUrl);
+            ds.setURL("jdbc:oracle:thin:" + dbUrl);
             worker.getDao().setDataSource(ds);
         }
-        if (outputDir!=null){
+        if (outputDir != null) {
             worker.getFileWorker().setOutputPath(outputDir);
         }
+    }
+
+    private static void testDBConnection(Worker worker) throws Exception {
+        String url;
+        if (worker.getDao().connectionAvailable()) {
+            System.out.println("OK connection to " + getCurrentDBURL(worker));
+        } else {
+            System.out.println("FAIL connect to " + getCurrentDBURL(worker));
+        }
+    }
+
+    private static String getCurrentDBURL(Worker worker) throws SQLException {
+        OracleDataSource ods = (OracleDataSource) worker.getDao().getDataSource();
+        return ods.getURL() ;
     }
 
     private static void collectArgs(String[] args) throws Exception {
@@ -78,10 +98,11 @@ public class Main {
                 outputDir = args[i + 1];
                 i++;
                 createDir();
-            } else if (arg.equals("-version")){
-               justPrintVersion = true;
-            }
-            else if (arg.startsWith("-")) {
+            } else if (arg.equals("-tc") || arg.equals("--test-connection")) {
+                justTestConnection = true;
+            } else if (arg.equals("-version")) {
+                justPrintVersion = true;
+            } else if (arg.startsWith("-")) {
                 // we don't have any more args to recognize!
                 String msg = "Unknown argument: " + arg;
                 System.err.println(msg);
@@ -92,8 +113,8 @@ public class Main {
     }
 
     private static void createDir() throws Exception {
-        if (!outputDir.endsWith("\\")){
-            outputDir +=  "\\";
+        if (!outputDir.endsWith("\\")) {
+            outputDir += "\\";
         }
         try {
             //check for creating dir todo
@@ -121,6 +142,7 @@ public class Main {
 
         msg.append("  -output, -o            output dir" + lSep);
         msg.append("  -s,                    include storage info in DDL scripts (default no include)" + lSep);
+        msg.append("  --test-connection,-tc  test db connection available" + lSep);
         msg.append("  -version,              print version info and exit" + lSep);
         System.out.println(msg.toString());
     }
@@ -129,7 +151,7 @@ public class Main {
         System.out.println(getVersion());
     }
 
-    private static String getVersion(){
+    private static String getVersion() {
         return Main.class.getPackage().getImplementationVersion();
     }
 
