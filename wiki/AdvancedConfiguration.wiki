@@ -1,0 +1,70 @@
+#labels Featured,Phase-Support
+
+==Advanced configuration==
+advanced configuration provided in scheme2ddl.config.xml
+
+What can be configured:
+
+1) Types of object you want to export out
+{{{
+    <util:set id="types_for_getting_DDL">
+        <value>TABLE</value>
+        <value>MATERIALIZED VIEW</value>
+        <value>TRIGGER</value>
+    </util:set>
+}}}
+
+2) dependable objects to include in main DDL of object 
+(for example, triggers for tables, or object grants on view)
+configured in {{{ <property name="map"> inside "dao" bean }}}
+
+{{{
+        <property name="map">
+            <map>
+                <entry key="TABLE">
+                    <set>
+                        <value>COMMENT</value>
+                        <value>INDEX</value>
+                        <value>OBJECT_GRANT</value>
+                        <value>TRIGGER</value>
+                    </set>
+                </entry>
+}}}
+
+3) output options in bean "fileWorker"
+{{{
+    <bean id="fileWorker" ...>
+        <property name="outputPath" value="D:/temp/oracle-ddl2svn/TEST/"/>
+        <property name="sortByDirectory" value="true"/>
+        <property name="fileExtension" value="sql"/>
+    </bean>
+}}}
+
+4) transformParams for dbms_metadata 
+{{{
+    <util:map id="transformParams_for_dbms_metadata">
+        <entry key="SEGMENT_ATTRIBUTES" value="0"/>
+        <entry key="SQLTERMINATOR" value="1"/>
+        <entry key="CONSTRAINTS_AS_ALTER" value="1"/>
+    </util:map>
+}}}
+
+5) format DDL options
+{{{
+    <bean id="ddlFormatter" ...>
+        <property name="statementOnNewLine" value="true"/>
+    </bean>
+}}}
+
+6) default db url
+{{{
+    <bean id="dataSource" ...>
+        <property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>
+    </bean>
+}}}
+
+7) filter objects by age
+{{{
+    <property name="last_ddl_time_age" value="0"/>
+}}}
+if value>0 it produce SQL where condition {{{last_ddl_time>=sysdate-objectsAge}}}
