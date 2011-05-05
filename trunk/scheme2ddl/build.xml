@@ -291,6 +291,10 @@
         <echo message="svn author is ${svn.author}"></echo>
         <echo message="svn commited date is ${svn.lastDate}"></echo>
     </target>
+	
+	<target name="echoproperties">
+	<echoproperties/>
+	</target>
 
 
     <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
