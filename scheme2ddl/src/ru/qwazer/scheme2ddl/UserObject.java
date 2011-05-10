@@ -59,7 +59,7 @@ public class UserObject {
     public String getTypePlural() {
         String s = type.toLowerCase().replaceAll("\\s", "_");
         if (s.endsWith("x")) {
-            return s + "ex";
+            return s + "es";
         }
         return s + "s";
     }
