@@ -90,6 +90,11 @@
                 <value>kc_</value>
             </set>
         </entry>
+        <entry key="INDEX">
+            <set>
+                <value>d_1fe6703a8</value>
+            </set>
+        </entry>
     </util:map>
 
     <!-- output options -->
