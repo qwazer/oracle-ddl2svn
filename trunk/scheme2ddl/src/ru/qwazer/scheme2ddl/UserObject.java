@@ -57,10 +57,11 @@ public class UserObject {
      * @return
      */
     public String getTypePlural() {
-        if (type.toLowerCase().endsWith("x")) {
-            return type.toLowerCase()+"ex";
+        String s = type.toLowerCase().replaceAll("\\s", "_");
+        if (s.endsWith("x")) {
+            return s + "ex";
         }
-        return type.toLowerCase()+"s";
+        return s + "s";
     }
 
     /**
