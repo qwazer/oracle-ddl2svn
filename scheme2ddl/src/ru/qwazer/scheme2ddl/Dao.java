@@ -39,6 +39,7 @@ public class Dao extends JdbcDaoSupport {
     private Map<String, Set<String>> map;
     private Map<String,String> transformParams;
     private Set<String> filterTypes;
+    private Map<String,Set<String>> excludeMap;
     private int objectsAge;
 
 
@@ -134,7 +135,27 @@ public class Dao extends JdbcDaoSupport {
         }
          List<UserObject> list = getUserObjectListPrivate(whereAdd);
           filterFromSystemTypes(list);
+        filterFromExcludedTypesPrefixes(list);
         return list;
+    }
+
+    /**
+     * Remove exluded types specified by prefixes in config
+     * @param list
+     */
+    private void filterFromExcludedTypesPrefixes(List<UserObject> list) {
+        List<UserObject> removed = new ArrayList<UserObject>();
+        for (UserObject obj : list) {
+            for (String typeName : excludeMap.keySet()) {
+                for (String prefix : excludeMap.get(typeName)) {
+                    if (obj.getType().equalsIgnoreCase(typeName) &&
+                            obj.getName().toLowerCase().startsWith(prefix.toLowerCase())) {
+                        removed.add(obj);
+                    }
+                }
+            }
+        }
+        list.removeAll(removed);
     }
 
     /**
@@ -241,6 +262,10 @@ public class Dao extends JdbcDaoSupport {
 
     public void setLast_ddl_time_age(int howLong) {
         this.objectsAge = howLong;
+    }
+
+    public void setExcludeMap(Map<String, Set<String>> excludeMap) {
+        this.excludeMap = excludeMap;
     }
 
 
