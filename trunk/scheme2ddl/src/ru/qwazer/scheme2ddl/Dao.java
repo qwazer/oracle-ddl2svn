@@ -134,7 +134,8 @@ public class Dao extends JdbcDaoSupport {
             whereAdd += "'')";
         }
          List<UserObject> list = getUserObjectListPrivate(whereAdd);
-          filterFromSystemTypes(list);
+        System.out.println("list.size() before filter = " + list.size());
+        filterFromSystemTypes(list);
         filterFromExcludedTypesPrefixes(list);
         return list;
     }
