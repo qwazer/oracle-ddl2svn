@@ -144,7 +144,7 @@ public class Dao extends JdbcDaoSupport {
      * @param list
      */
     private void filterFromExcludedTypesPrefixes(List<UserObject> list) {
-        if (excludeMap == null || excludeMap.size()=0) return;
+        if (excludeMap == null || excludeMap.size()==0) return;
         List<UserObject> removed = new ArrayList<UserObject>();
         for (UserObject obj : list) {
             for (String typeName : excludeMap.keySet()) {
