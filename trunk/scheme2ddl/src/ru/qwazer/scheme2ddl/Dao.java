@@ -35,13 +35,11 @@ import java.util.*;
  */
 public class Dao extends JdbcDaoSupport {
 
-
     private Map<String, Set<String>> map;
     private Map<String,String> transformParams;
     private Set<String> filterTypes;
     private Map<String,Set<String>> excludeMap;
     private int objectsAge;
-
 
     public UserObject fillDDL(UserObject obj) {
         String ddl = "";
@@ -50,7 +48,6 @@ public class Dao extends JdbcDaoSupport {
         obj.setDdl(ddl);
         return obj;
     }
-
 
     /**
      * There is  primary and depended DDL in DMBS_METADATA package
@@ -78,7 +75,6 @@ public class Dao extends JdbcDaoSupport {
         });
     }
 
-
     private String getDependedDDL(UserObject obj) {
         String res = "";
         Set<String> dependedTypes = map.get(obj.getType());
@@ -90,8 +86,6 @@ public class Dao extends JdbcDaoSupport {
         return res;
 
     }
-
-
 
     private String getDependentDLLByTypeName(final String type, final String name) {
 
@@ -176,7 +170,6 @@ public class Dao extends JdbcDaoSupport {
         list.removeAll(removed);
     }
 
-
 //    public List<UserObject> getUserObjectList(List<String> types) {
 //        String whereAdd = null;
 //        if (types != null && !types.isEmpty()) {
@@ -218,15 +211,14 @@ public class Dao extends JdbcDaoSupport {
             }
         });
 
-
         return list;
     }
 
-
     private void setTransformParameters(Connection connection) throws SQLException {
         String sql;
-        for ( String param: transformParams.keySet()){
-           sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(-1,'" + param + "',"+transformParams.get(param)+")";
+        for (String param: transformParams.keySet()) {
+           connection.setAutoCommit(false);
+           sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM,'" + param + "',"+transformParams.get(param)+")";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.execute();
         }
@@ -236,7 +228,7 @@ public class Dao extends JdbcDaoSupport {
      * Test db connection
      * @return
      */
-    public boolean connectionAvailable (){
+    public boolean connectionAvailable() {
         try {
             getJdbcTemplate().queryForInt("select 1 from dual");
         } catch (DataAccessException e) {
@@ -253,7 +245,6 @@ public class Dao extends JdbcDaoSupport {
         this.transformParams = transformParams;
     }
 
-
     public void setFilterTypes(Set<String> types) {
         this.filterTypes = types;
     }
@@ -269,6 +260,4 @@ public class Dao extends JdbcDaoSupport {
     public void setExcludeMap(Map<String, Set<String>> excludeMap) {
         this.excludeMap = excludeMap;
     }
-
-
 }
