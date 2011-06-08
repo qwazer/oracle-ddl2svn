@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
-        >
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
         <property name="URL" value="jdbc:oracle:thin:scott/tiger@localhost:1521:ORCL"/>
     </bean>
 
     <bean id="dao" class="ru.qwazer.scheme2ddl.Dao">
-        <!-- Specify dependable items for every user object type
-         accordingly with http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm#BGBIEDIA-->
+        <!-- Specify dependable items for every user object type accordingly with http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm#BGBIEDIA -->
         <property name="map">
             <map>
                 <entry key="TABLE">
@@ -64,19 +66,17 @@
         <property name="excludeMap" ref="exclude_map_prefixes"/>
     </bean>
 
-    <!-- todo add all types of user objects -->
-    <!-- uncomment lines with user object types you want export as DDL -->
     <util:set id="types_for_getting_DDL">
-        <!--<value>TABLE</value>-->
+        <value>TABLE</value>
         <value>VIEW</value>
-        <!--<value>FUNCTION</value>-->
-        <!--<value>PROCEDURE</value>-->
-        <!--<value>MATERIALIZED VIEW</value>-->
-        <!--<value>TRIGGER</value>-->
-        <!--<value>PACKAGE</value>-->
-        <!--<value>TYPE</value>-->
-        <!--<value>SEQUENCE</value>-->
-        <!--<value>SYNONYM</value>-->
+        <value>FUNCTION</value>
+        <value>PROCEDURE</value>
+        <value>MATERIALIZED VIEW</value>
+        <value>TRIGGER</value>
+        <value>PACKAGE</value>
+        <value>TYPE</value>
+        <value>SEQUENCE</value>
+        <value>SYNONYM</value>
     </util:set>
 
     <!-- used for exclude object types starts with-->
@@ -114,8 +114,7 @@
     <!-- format option for DDL -->
     <bean id="ddlFormatter" class="ru.qwazer.scheme2ddl.DDLFormatter">
         <property name="noFormat" value="false"/>
-        <!-- Check it to true if you don't want apply formatting on DMBS_OUTPUT,
-         Formatting option can be unsafe because it based on regexp rules -->
+        <!-- Check it to true if you don't want apply formatting on DMBS_OUTPUT. Formatting option can be unsafe because it based on regexp rules -->
         <property name="statementOnNewLine" value="true"/>
     </bean>
 
@@ -124,6 +123,5 @@
         <property name="fileWorker" ref="fileWorker"/>
         <property name="ddlFormatter" ref="ddlFormatter"/>
     </bean>
-
 
 </beans>
