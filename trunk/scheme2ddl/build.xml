@@ -36,7 +36,7 @@
 
     <path id="library.lib.classpath">
         <pathelement location="${basedir}/lib/commons-logging.jar"/>
-        <pathelement location="${basedir}/lib/ojdbc14.jar"/>
+        <pathelement location="${basedir}/lib/ojdbc5.jar"/>
         <pathelement location="${basedir}/lib/spring-asm.jar"/>
         <pathelement location="${basedir}/lib/spring-beans.jar"/>
         <pathelement location="${basedir}/lib/spring-context.jar"/>
@@ -163,7 +163,7 @@
             <zipfileset src="${basedir}/lib/spring-expression.jar"/>
             <zipfileset src="${basedir}/lib/spring-tx.jar"/>
             <zipfileset src="${basedir}/lib/spring-asm.jar"/>
-            <zipfileset src="${basedir}/lib/ojdbc14.jar"/>
+            <zipfileset src="${basedir}/lib/ojdbc5.jar"/>
             <zipfileset src="${basedir}/lib/spring-beans.jar"/>
             <zipfileset src="${basedir}/lib/commons-logging.jar"/>
             <zipfileset src="${basedir}/lib/spring-context.jar"/>
