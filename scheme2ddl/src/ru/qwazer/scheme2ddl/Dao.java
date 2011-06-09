@@ -218,7 +218,12 @@ public class Dao extends JdbcDaoSupport {
         String sql;
         for (String param: transformParams.keySet()) {
            connection.setAutoCommit(false);
-           sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM,'" + param + "',"+transformParams.get(param)+")";
+       //    sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM,'" + param + "',"+transformParams.get(param)+")";
+           sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(-1,'" + param + "',"+transformParams.get(param)+")";
+            //  DBMS_METADATA.SESSION_TRANSFORM replaced by -1 because,
+            // variables and constants in the package can only be accessed from the PL / SQL,
+            // not from SQL as in my case.
+            //(for oracle 10 it works)  //todo test for oracle 11
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.execute();
         }
