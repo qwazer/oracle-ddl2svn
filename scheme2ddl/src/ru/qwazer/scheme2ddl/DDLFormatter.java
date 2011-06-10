@@ -18,10 +18,13 @@ public class DDLFormatter {
 
         String ddl = obj.getDdl();
         if (statementOnNewLine){
-            ddl = ddl.replace("\n;", ";");
-            ddl = ddl.replace(";GRANT", ";\nGRANT");
-            ddl = ddl.replace(";COMMENT", "\n;COMMENT");
-            ddl = ddl.replace(";CREATE", "\n;CREATE");
+            // Get a new line specific to the system
+            String newline = System.getProperty("line.separator");
+
+            ddl = ddl.replace(newline, ";");
+            ddl = ddl.replace(";GRANT", ";" + newline + "GRANT");
+            ddl = ddl.replace(";COMMENT", ";" + newline + "COMMENT");
+            ddl = ddl.replace(";CREATE", ";" + newline + "CREATE");
         }
 
 //        if (removeLastSlash){
