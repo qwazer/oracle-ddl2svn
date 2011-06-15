@@ -72,7 +72,6 @@ public class Main {
     }
 
     private static void testDBConnection(Worker worker) throws Exception {
-        String url;
         if (worker.getDao().connectionAvailable()) {
             System.out.println("OK success connection to " + getCurrentDBURL(worker));
         } else {
