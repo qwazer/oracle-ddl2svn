@@ -1,7 +1,7 @@
 #labels Links
 #Links
 
-http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm
+http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14258/d_metada.htm 
 
 http://www.sql.ru/forum/actualthread.aspx?tid=477117
 
