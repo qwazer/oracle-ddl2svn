@@ -10,3 +10,5 @@ http://gael-varoquaux.info/computers/svnautocommit/index.html
 http://blog.sosedoff.com/2009/01/16/svn-auto-add-and-delete/
 
 http://code.google.com/p/svntask/
+
+http://www.google.com/q=oracle+ddl+svn
