@@ -184,7 +184,13 @@ public class Dao extends JdbcDaoSupport {
 
     private List<UserObject> getUserObjectListPrivate(String whereAdd) {
 
-        String select_sql = "select t.object_name, t.object_type from user_objects t where t.generated='N' ";
+        String select_sql =
+                "select t.object_name, t.object_type " +
+                "from user_objects t " +
+                "where t.generated='N' and" +
+                "      not exists (select 1 " +
+                "                  from user_nested_tables unt " +
+                "                  where t.object_name = unt.table_name) ";
         if (objectsAge>0){
             select_sql += " and last_ddl_time>=sysdate-"+objectsAge + " ";
         }
