@@ -67,7 +67,7 @@
     </bean>
 
     <util:set id="types_for_getting_DDL">
-        <value>TABLE</value>
+        <!--<value>TABLE</value>-->
         <value>VIEW</value>
         <value>FUNCTION</value>
         <value>PROCEDURE</value>
@@ -77,7 +77,8 @@
         <value>TYPE</value>
         <value>SEQUENCE</value>
         <value>SYNONYM</value>
-        <value>DB_LINK</value>
+        <value>DATABASE LINK</value>
+        <value>JAVA SOURCE</value>
     </util:set>
 
     <!-- used for exclude object types starts with-->

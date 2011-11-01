@@ -37,7 +37,8 @@ public class UserObject {
 
     /**
      * Get name for filename
-     * @return  name for filename
+     *
+     * @return name for filename
      */
     public String getName4Filename() {
         return name.toLowerCase().replaceAll("/", "");
@@ -54,11 +55,12 @@ public class UserObject {
     /**
      * used if sortByDirectory = true
      * for creating directory names
+     *
      * @return
      */
     public String getTypePlural() {
-        String s = type.toLowerCase().replaceAll("\\s", "_");
-        if (s.endsWith("x")) {
+        String s = getType4DBMS().toLowerCase();
+        if (s.endsWith("x") || s.endsWith("s")) {
             return s + "es";
         }
         return s + "s";
@@ -67,10 +69,12 @@ public class UserObject {
     /**
      * Oracle types in user_table without underscore, for example PACKAGE BODY
      * but in DBMS_METADATA with underscore   PACKAGE_BODY
-     * @return  type name foe using in  DBMS_METADATA package
+     *
+     * @return type name foe using in  DBMS_METADATA package
      */
-
-    public String getType4DBMS(){
+    public String getType4DBMS() {
+        if (type.equalsIgnoreCase("DATABASE LINK"))
+            return "DB_LINK";
         return type.replaceAll(" ", "_");
     }
 
