@@ -190,7 +190,11 @@ public class Dao extends JdbcDaoSupport {
                 "where t.generated='N' and" +
                 "      not exists (select 1 " +
                 "                  from user_nested_tables unt " +
-                "                  where t.object_name = unt.table_name) ";
+                "                  where t.object_name = unt.table_name)";
+        if (needToAddUserDbLinks()){
+            select_sql += " union all " +
+                    " select db_link as object_name, 'DB_LINK' as object_type from USER_DB_LINKS";
+        }
         if (objectsAge>0){
             select_sql += " and last_ddl_time>=sysdate-"+objectsAge + " ";
         }
@@ -218,6 +222,14 @@ public class Dao extends JdbcDaoSupport {
         });
 
         return list;
+    }
+
+    /**
+     * calculate if user config has db_links
+     * @return true if user config has db_links
+     */
+    private boolean needToAddUserDbLinks() {
+        return map.containsKey("DB_LINK");
     }
 
     private void setTransformParameters(Connection connection) throws SQLException {
