@@ -36,9 +36,9 @@ import java.util.*;
 public class Dao extends JdbcDaoSupport {
 
     private Map<String, Set<String>> map;
-    private Map<String,String> transformParams;
+    private Map<String, String> transformParams;
     private Set<String> filterTypes;
-    private Map<String,Set<String>> excludeMap;
+    private Map<String, Set<String>> excludeMap;
     private int objectsAge;
 
     public UserObject fillDDL(UserObject obj) {
@@ -52,6 +52,7 @@ public class Dao extends JdbcDaoSupport {
     /**
      * There is  primary and depended DDL in DMBS_METADATA package
      * Example of primary is TABLE, example of depended is INDEX
+     *
      * @param obj
      * @return
      */
@@ -115,19 +116,22 @@ public class Dao extends JdbcDaoSupport {
     }
 
     /**
-     *  Get user object list for processing;
-     * @return  List of ru.qwazer.scheme2ddl.UserObject
+     * Get user object list for processing;
+     *
+     * @return List of ru.qwazer.scheme2ddl.UserObject
      */
     public List<UserObject> getUserObjectList() {
         String whereAdd = null;
         if (filterTypes != null && !filterTypes.isEmpty()) {
             whereAdd = " and object_type in ( ";
             for (String type : filterTypes) {
-                whereAdd += "'" + type.toUpperCase() + "',";
+                if (!type.equalsIgnoreCase("DB_LINK")) {
+                    whereAdd += "'" + type.toUpperCase() + "',";
+                }
             }
             whereAdd += "'')";
         }
-         List<UserObject> list = getUserObjectListPrivate(whereAdd);
+        List<UserObject> list = getUserObjectListPrivate(whereAdd);
         System.out.println("list.size() before filter = " + list.size());
         filterFromSystemTypes(list);
         filterFromExcludedTypesPrefixes(list);
@@ -136,10 +140,11 @@ public class Dao extends JdbcDaoSupport {
 
     /**
      * Remove exluded types specified by prefixes in config
+     *
      * @param list
      */
     private void filterFromExcludedTypesPrefixes(List<UserObject> list) {
-        if (excludeMap == null || excludeMap.size()==0) return;
+        if (excludeMap == null || excludeMap.size() == 0) return;
         List<UserObject> removed = new ArrayList<UserObject>();
         for (UserObject obj : list) {
             for (String typeName : excludeMap.keySet()) {
@@ -156,14 +161,15 @@ public class Dao extends JdbcDaoSupport {
 
     /**
      * For removing system types http://www.sql.ru/forum/actualthread.aspx?bid=3&tid=542661&hl=
+     *
      * @param list
      */
     private void filterFromSystemTypes(List<UserObject> list) {
-        List<UserObject> removed= new ArrayList<UserObject>();
-        for (UserObject obj : list ){
+        List<UserObject> removed = new ArrayList<UserObject>();
+        for (UserObject obj : list) {
             if (obj.getType().equalsIgnoreCase("TYPE")
                     && obj.getName().startsWith("SYSTP")
-                    && obj.getName().endsWith("==")){
+                    && obj.getName().endsWith("==")) {
                 removed.add(obj);
             }
         }
@@ -186,17 +192,17 @@ public class Dao extends JdbcDaoSupport {
 
         String select_sql =
                 "select t.object_name, t.object_type " +
-                "from user_objects t " +
-                "where t.generated='N' and" +
-                "      not exists (select 1 " +
-                "                  from user_nested_tables unt " +
-                "                  where t.object_name = unt.table_name)";
-        if (needToAddUserDbLinks()){
-            select_sql += " union all " +
-                    " select db_link as object_name, 'DB_LINK' as object_type from USER_DB_LINKS";
+                        "from user_objects t " +
+                        "where t.generated='N' and" +
+                        "      not exists (select 1 " +
+                        "                  from user_nested_tables unt " +
+                        "                  where t.object_name = unt.table_name)";
+        if (needToAddUserDbLinks()) {
+            select_sql =  " select db_link as object_name, 'DB_LINK' as object_type from USER_DB_LINKS " +
+                            " union all " + select_sql;
         }
-        if (objectsAge>0){
-            select_sql += " and last_ddl_time>=sysdate-"+objectsAge + " ";
+        if (objectsAge > 0) {
+            select_sql += " and last_ddl_time>=sysdate-" + objectsAge + " ";
         }
         final String sql;
         if (whereAdd != null && !whereAdd.equals("")) {
@@ -226,18 +232,19 @@ public class Dao extends JdbcDaoSupport {
 
     /**
      * calculate if user config has db_links
+     *
      * @return true if user config has db_links
      */
     private boolean needToAddUserDbLinks() {
-        return map.containsKey("DB_LINK");
+        return filterTypes.contains("DB_LINK");
     }
 
     private void setTransformParameters(Connection connection) throws SQLException {
         String sql;
-        for (String param: transformParams.keySet()) {
-           connection.setAutoCommit(false);
-       //    sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM,'" + param + "',"+transformParams.get(param)+")";
-           sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(-1,'" + param + "',"+transformParams.get(param)+")";
+        for (String param : transformParams.keySet()) {
+            connection.setAutoCommit(false);
+            //    sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(DBMS_METADATA.SESSION_TRANSFORM,'" + param + "',"+transformParams.get(param)+")";
+            sql = "call DBMS_METADATA.SET_TRANSFORM_PARAM(-1,'" + param + "'," + transformParams.get(param) + ")";
             //  DBMS_METADATA.SESSION_TRANSFORM replaced by -1 because,
             // variables and constants in the package can only be accessed from the PL / SQL,
             // not from SQL as in my case.
@@ -249,6 +256,7 @@ public class Dao extends JdbcDaoSupport {
 
     /**
      * Test db connection
+     *
      * @return
      */
     public boolean connectionAvailable() {
@@ -272,7 +280,7 @@ public class Dao extends JdbcDaoSupport {
         this.filterTypes = types;
     }
 
-     public int getLast_ddl_time_age() {
+    public int getLast_ddl_time_age() {
         return objectsAge;
     }
 
