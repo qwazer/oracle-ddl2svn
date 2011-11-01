@@ -77,6 +77,7 @@
         <value>TYPE</value>
         <value>SEQUENCE</value>
         <value>SYNONYM</value>
+        <value>DB_LINK</value>
     </util:set>
 
     <!-- used for exclude object types starts with-->
