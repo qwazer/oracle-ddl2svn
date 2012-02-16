@@ -1,0 +1,61 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>oracle-ddl2svn-distr-release</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <moduleSets>
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <includes>
+                <include>com.googlecode:scheme2ddl</include>
+            </includes>
+            <sources>
+                <!--<includes>scheme2ddl.config.xml</includes>-->
+                <!--<outputDirectory>src</outputDirectory>-->
+                <!--<includes>*/**.xml</includes>-->
+                <fileSets>
+                    <fileSet>
+                        <outputDirectory>../</outputDirectory>
+                        <directory>src/main/resources</directory>
+                    </fileSet>
+                </fileSets>
+            </sources>
+
+        </moduleSet>
+
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <includes>
+                <include>com.googlecode:ddl2svn</include>
+            </includes>
+            <sources>
+                <fileSets>
+                    <fileSet>
+                        <outputDirectory>../</outputDirectory>
+                        <directory>scripts</directory>
+                    </fileSet>
+                </fileSets>
+            </sources>
+        </moduleSet>
+    </moduleSets>
+    <dependencySets>
+        <dependencySet>
+            <includes>
+                <include>com.googlecode:scheme2ddl:jar</include>
+            </includes>
+            <outputFileNameMapping>scheme2ddl.jar</outputFileNameMapping>
+        </dependencySet>
+    </dependencySets>
+    <!--<files>-->
+    <!--<file>-->
+    <!--<source>D:\projects\GoogleCode_SVN\oracle-ddl2svn\scheme2ddl\target\scheme2ddl-0.1-SNAPSHOT-jar-with-dependencies.jar</source>-->
+    <!--<destName>scheme2ddl.jar</destName>-->
+    <!--</file>-->
+    <!--</files>-->
+
+
+</assembly>
