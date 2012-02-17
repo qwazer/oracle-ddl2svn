@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.googlecode</groupId>
-        <artifactId>oracle-ddl2svn</artifactId>
+        <artifactId>oracle-ddl2svn-parent</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
 
@@ -92,8 +92,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <doCheck>true</doCheck>
-                    <doUpdate>true</doUpdate>
+                    <!--<doCheck>true</doCheck>-->
+                    <!--<doUpdate>true</doUpdate>-->
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
                 </configuration>
             </plugin>
 
