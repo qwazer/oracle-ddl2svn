@@ -30,7 +30,7 @@
         <moduleSet>
             <useAllReactorProjects>true</useAllReactorProjects>
             <includes>
-                <include>com.googlecode:ddl2svn</include>
+                <include>com.googlecode:ddl2svn-scripts</include>
             </includes>
             <sources>
                 <fileSets>
