@@ -12,7 +12,7 @@
 
     <modules>
         <module>scheme2ddl</module>
-        <module>ddl2svn</module>
+        <module>ddl2svn-scripts</module>
         <module>oracle-ddl2svn-distr</module>
     </modules>
 

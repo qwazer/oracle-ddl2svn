@@ -13,44 +13,4 @@
 
     <packaging>pom</packaging>
 
-    <!-- NOTE: These dependency declarations are only required to sort this project to the
-         end of the line in the multimodule build.
-
-         Since we only include the child1 module in our assembly, we only need to ensure this
-         distribution project builds AFTER that one...
-    -->
-    <dependencies>
-        <dependency>
-            <groupId>com.googlecode</groupId>
-            <artifactId>scheme2ddl</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
-
-
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <id>distro-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>descriptor.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-
 </project>
