@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>oracle-ddl2svn-distr</artifactId>
+    <artifactId>oracle-ddl2svn</artifactId>
 
     <!-- NOTE: These dependency declarations are only required to sort this project to the
          end of the line in the multimodule build.
