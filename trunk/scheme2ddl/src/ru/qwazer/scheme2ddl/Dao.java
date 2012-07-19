@@ -38,7 +38,8 @@ public class Dao extends JdbcDaoSupport {
     private Map<String, Set<String>> map;
     private Map<String,String> transformParams;
     private Set<String> filterTypes;
-    private Map<String,Set<String>> excludeMap;
+    private Map<String,Set<String>> excludeMapPrefixes;
+    private Map<String,Set<String>> excludeMapPatterns;
     private int objectsAge;
 
     public UserObject fillDDL(UserObject obj) {
@@ -130,7 +131,7 @@ public class Dao extends JdbcDaoSupport {
          List<UserObject> list = getUserObjectListPrivate(whereAdd);
         System.out.println("list.size() before filter = " + list.size());
         filterFromSystemTypes(list);
-        filterFromExcludedTypesPrefixes(list);
+        filterFromExcludedTypes(list);
         return list;
     }
 
@@ -138,12 +139,22 @@ public class Dao extends JdbcDaoSupport {
      * Remove exluded types specified by prefixes in config
      * @param list
      */
+    private void filterFromExcludedTypes(List<UserObject> list) {
+        filterFromExcludedTypesPrefixes(list);
+        filterFromExcludedTypesPatterns(list);
+    }
+
+
+    /**
+     * Remove exluded types specified by prefixes in config
+     * @param list
+     */
     private void filterFromExcludedTypesPrefixes(List<UserObject> list) {
-        if (excludeMap == null || excludeMap.size()==0) return;
+        if (excludeMapPrefixes == null || excludeMapPrefixes.size()==0) return;
         List<UserObject> removed = new ArrayList<UserObject>();
         for (UserObject obj : list) {
-            for (String typeName : excludeMap.keySet()) {
-                for (String prefix : excludeMap.get(typeName)) {
+            for (String typeName : excludeMapPrefixes.keySet()) {
+                for (String prefix : excludeMapPrefixes.get(typeName)) {
                     if (obj.getType().equalsIgnoreCase(typeName) &&
                             obj.getName().toLowerCase().startsWith(prefix.toLowerCase())) {
                         removed.add(obj);
@@ -152,6 +163,28 @@ public class Dao extends JdbcDaoSupport {
             }
         }
         list.removeAll(removed);
+    }
+
+
+    private void filterFromExcludedTypesPatterns(List<UserObject> list) {
+        if (excludeMapPatterns == null || excludeMapPatterns.size()==0) return;
+        List<UserObject> removed = new ArrayList<UserObject>();
+        for (UserObject obj : list) {
+            for (String typeName : excludeMapPatterns.keySet()) {
+                for (String pattern : excludeMapPatterns.get(typeName)) {
+                    if (obj.getType().equalsIgnoreCase(typeName) &&
+                            patternMatch(obj.getName().toLowerCase(), pattern)) {
+                        removed.add(obj);
+                    }
+                }
+            }
+        }
+        list.removeAll(removed);
+    }
+
+    private boolean patternMatch(String s, String pattern) {
+        pattern = pattern.replace("*", "(.*)");
+        return s.matches(pattern);
     }
 
     /**
@@ -268,7 +301,11 @@ public class Dao extends JdbcDaoSupport {
         this.objectsAge = howLong;
     }
 
-    public void setExcludeMap(Map<String, Set<String>> excludeMap) {
-        this.excludeMap = excludeMap;
+    public void setExcludeMapPrefixes(Map<String, Set<String>> excludeMapPrefixes) {
+        this.excludeMapPrefixes = excludeMapPrefixes;
+    }
+
+    public void setExcludeMapPatterns(Map<String, Set<String>> excludeMapPatterns) {
+        this.excludeMapPatterns = excludeMapPatterns;
     }
 }
