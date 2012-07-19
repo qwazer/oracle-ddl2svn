@@ -57,10 +57,14 @@ public class Dao extends JdbcDaoSupport {
      * @return
      */
     private String getPrimaryDDL(final UserObject obj) {
+        String sql = "select dbms_metadata.get_ddl(?, ?) from dual";
+        if (obj.getType().equals("PUBLIC_DATABASE LINK"))
+            sql = "select dbms_metadata.get_ddl(?, ?, 'PUBLIC') from dual";
+        final String query= sql;
         return (String) getJdbcTemplate().execute(new ConnectionCallback() {
             public Object doInConnection(Connection connection) throws SQLException, DataAccessException {
                 setTransformParameters(connection);
-                PreparedStatement ps = connection.prepareStatement("select dbms_metadata.get_ddl(?, ?) from dual");
+                PreparedStatement ps = connection.prepareStatement(query);
                 ps.setString(1, obj.getType4DBMS());
                 ps.setString(2, obj.getName());
                 ResultSet rs = ps.executeQuery();
@@ -228,9 +232,18 @@ public class Dao extends JdbcDaoSupport {
             select_sql += " and last_ddl_time>=sysdate-"+objectsAge + " ";
         }
         final String sql;
+
+        String publicDbLinksSql = "";
+
+        if (needToAddPublicDbLinks()){
+            publicDbLinksSql += " union " +
+                    " select db_link as object_name, 'PUBLIC_DATABASE LINK' as object_type from DBA_DB_LINKS where owner='PUBLIC'";
+        }
+
         if (whereAdd != null && !whereAdd.equals("")) {
-            sql = select_sql + whereAdd;
-        } else sql = select_sql;
+            sql = select_sql + whereAdd + publicDbLinksSql;
+        } else sql = select_sql + publicDbLinksSql;
+
 
         List<UserObject> list = (List<UserObject>) getJdbcTemplate().execute(new ConnectionCallback() {
             public Object doInConnection(Connection connection) throws SQLException, DataAccessException {
@@ -251,6 +264,10 @@ public class Dao extends JdbcDaoSupport {
         });
 
         return list;
+    }
+
+    private boolean needToAddPublicDbLinks() {
+        return filterTypes.contains("PUBLIC_DATABASE LINK");
     }
 
     private void setTransformParameters(Connection connection) throws SQLException {

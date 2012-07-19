@@ -73,7 +73,7 @@ public class UserObject {
      * @return type name foe using in  DBMS_METADATA package
      */
     public String getType4DBMS() {
-        if (type.equalsIgnoreCase("DATABASE LINK"))
+        if (type.contains("DATABASE LINK"))
             return "DB_LINK";
         return type.replaceAll(" ", "_");
     }
