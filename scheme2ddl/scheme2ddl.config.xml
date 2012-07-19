@@ -63,7 +63,7 @@
         <property name="transformParams" ref="transformParams_for_dbms_metadata"/>
         <property name="filterTypes" ref="types_for_getting_DDL"/>
         <property name="last_ddl_time_age" value="0"/>
-        <property name="excludeMap" ref="exclude_map_prefixes"/>
+        <property name="excludeMapPrefixes" ref="exclude_map_prefixes"/>
     </bean>
 
     <util:set id="types_for_getting_DDL">
@@ -97,6 +97,22 @@
                 <!--<value>d_1fe6703a8</value>-->
             <!--</set>-->
         <!--</entry>-->
+    </util:map>
+
+    <util:map id="exclude_map_pattern">
+        <!-- currently only '*' wildcard supported-->
+        <entry key="VIEW">
+            <set>
+                <value>*_*_temp</value>
+                <value>*_*_temp</value>
+
+            </set>
+        </entry>
+        <entry key="INDEX">
+            <set>
+                <value>*_temp</value>
+            </set>
+        </entry>
     </util:map>
 
     <!-- output options -->
