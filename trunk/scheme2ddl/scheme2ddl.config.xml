@@ -64,6 +64,7 @@
         <property name="filterTypes" ref="types_for_getting_DDL"/>
         <property name="last_ddl_time_age" value="0"/>
         <property name="excludeMapPrefixes" ref="exclude_map_prefixes"/>
+        <property name="excludeMapPatterns" ref="exclude_map_pattern"/>
     </bean>
 
     <util:set id="types_for_getting_DDL">
