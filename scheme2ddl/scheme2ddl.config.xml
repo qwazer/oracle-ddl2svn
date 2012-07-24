@@ -80,7 +80,7 @@
         <value>SYNONYM</value>
         <value>DATABASE LINK</value>
         <value>JAVA SOURCE</value>
-        <value>PUBLIC_DATABASE LINK</value>
+        <value>PUBLIC DATABASE LINK</value>
     </util:set>
 
     <!-- used for exclude object types starts with-->
