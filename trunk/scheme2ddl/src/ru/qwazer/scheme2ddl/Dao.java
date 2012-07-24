@@ -58,7 +58,7 @@ public class Dao extends JdbcDaoSupport {
      */
     private String getPrimaryDDL(final UserObject obj) {
         String sql = "select dbms_metadata.get_ddl(?, ?) from dual";
-        if (obj.getType().equals("PUBLIC_DATABASE LINK"))
+        if (obj.getType().equals("PUBLIC DATABASE LINK"))
             sql = "select dbms_metadata.get_ddl(?, ?, 'PUBLIC') from dual";
         final String query= sql;
         return (String) getJdbcTemplate().execute(new ConnectionCallback() {
@@ -237,7 +237,7 @@ public class Dao extends JdbcDaoSupport {
 
         if (needToAddPublicDbLinks()){
             publicDbLinksSql += " union " +
-                    " select db_link as object_name, 'PUBLIC_DATABASE LINK' as object_type from DBA_DB_LINKS where owner='PUBLIC'";
+                    " select db_link as object_name, 'PUBLIC DATABASE LINK' as object_type from DBA_DB_LINKS where owner='PUBLIC'";
         }
 
         if (whereAdd != null && !whereAdd.equals("")) {
@@ -267,7 +267,7 @@ public class Dao extends JdbcDaoSupport {
     }
 
     private boolean needToAddPublicDbLinks() {
-        return filterTypes.contains("PUBLIC_DATABASE LINK");
+        return filterTypes.contains("PUBLIC DATABASE LINK");
     }
 
     private void setTransformParameters(Connection connection) throws SQLException {
