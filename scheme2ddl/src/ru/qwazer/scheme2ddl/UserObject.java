@@ -75,6 +75,8 @@ public class UserObject {
     public String getType4DBMS() {
         if (type.contains("DATABASE LINK"))
             return "DB_LINK";
+        if (type.equals("JOB"))
+            return "PROCOBJ";
         return type.replaceAll(" ", "_");
     }
 
