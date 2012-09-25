@@ -59,6 +59,8 @@ public class UserObject {
      * @return
      */
     public String getTypePlural() {
+        if (type.equals("JOB"))
+            return "jobs";
         String s = getType4DBMS().toLowerCase();
         if (s.endsWith("x") || s.endsWith("s")) {
             return s + "es";
