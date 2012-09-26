@@ -68,20 +68,21 @@
     </bean>
 
     <util:set id="types_for_getting_DDL">
-        <!--<value>TABLE</value>-->
-        <!--<value>VIEW</value>-->
-        <!--<value>FUNCTION</value>-->
-        <!--<value>PROCEDURE</value>-->
-        <!--<value>MATERIALIZED VIEW</value>-->
-        <!--<value>TRIGGER</value>-->
-        <!--<value>PACKAGE</value>-->
-        <!--<value>TYPE</value>-->
-        <!--<value>SEQUENCE</value>-->
-        <!--<value>SYNONYM</value>-->
-        <!--<value>DATABASE LINK</value>-->
-        <!--<value>JAVA SOURCE</value>-->
-        <!--<value>PUBLIC DATABASE LINK</value>-->
+        <value>TABLE</value>
+        <value>VIEW</value>
+        <value>FUNCTION</value>
+        <value>PROCEDURE</value>
+        <value>MATERIALIZED VIEW</value>
+        <value>TRIGGER</value>
+        <value>PACKAGE</value>
+        <value>TYPE</value>
+        <value>SEQUENCE</value>
+        <value>SYNONYM</value>
+        <value>DATABASE LINK</value>
+        <value>JAVA SOURCE</value>
+        <value>PUBLIC DATABASE LINK</value>
         <value>JOB</value>
+        <value>DBMS_JOB</value>
     </util:set>
 
     <!-- used for exclude object types starts with-->

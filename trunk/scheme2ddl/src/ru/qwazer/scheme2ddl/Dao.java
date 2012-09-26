@@ -17,13 +17,11 @@
 package ru.qwazer.scheme2ddl;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 
@@ -57,6 +55,13 @@ public class Dao extends JdbcDaoSupport {
      * @return
      */
     private String getPrimaryDDL(final UserObject obj) {
+
+        if (obj.getType().equals("DBMS_JOB"))
+        {
+            return findDbmsJobDDL(obj);
+
+             }
+
         String sql = "select dbms_metadata.get_ddl(?, ?) from dual";
         if (obj.getType().equals("PUBLIC DATABASE LINK"))
             sql = "select dbms_metadata.get_ddl(?, ?, 'PUBLIC') from dual";
@@ -78,6 +83,25 @@ public class Dao extends JdbcDaoSupport {
                 return null;
             }
         });
+    }
+
+    private String findDbmsJobDDL(UserObject obj) {
+
+       return  (String) getJdbcTemplate().execute("DECLARE\n" +
+               " callstr VARCHAR2(4000);\n" +
+               "BEGIN\n" +
+               "  dbms_job.user_export("+obj.getName()+", callstr);\n" +
+               ":done := callstr; " +
+               "END;", new CallableStatementCallbackImpl() );
+
+    }
+
+    private class CallableStatementCallbackImpl implements CallableStatementCallback{
+        public Object doInCallableStatement(CallableStatement callableStatement) throws SQLException, DataAccessException {
+            callableStatement.registerOutParameter( 1, java.sql.Types.VARCHAR  );
+            callableStatement.executeUpdate();
+            return callableStatement.getString(1);
+        }
     }
 
     private String getDependedDDL(UserObject obj) {
@@ -234,15 +258,22 @@ public class Dao extends JdbcDaoSupport {
         final String sql;
 
         String publicDbLinksSql = "";
+        String dbmsJobsSql = "";
 
         if (needToAddPublicDbLinks()){
             publicDbLinksSql += " union " +
                     " select db_link as object_name, 'PUBLIC DATABASE LINK' as object_type from DBA_DB_LINKS where owner='PUBLIC'";
         }
 
+        if (needToAddDbmsJobs()){
+            dbmsJobsSql += " union " +
+                    " select job || '' as object_name, 'DBMS_JOB' as object_type from DBA_JOBS where schema_user != 'SYSMAN'";
+        }
+
+
         if (whereAdd != null && !whereAdd.equals("")) {
-            sql = select_sql + whereAdd + publicDbLinksSql;
-        } else sql = select_sql + publicDbLinksSql;
+            sql = select_sql + whereAdd + publicDbLinksSql + dbmsJobsSql;
+        } else sql = select_sql + publicDbLinksSql + dbmsJobsSql;
 
 
         List<UserObject> list = (List<UserObject>) getJdbcTemplate().execute(new ConnectionCallback() {
@@ -264,6 +295,10 @@ public class Dao extends JdbcDaoSupport {
         });
 
         return list;
+    }
+
+    private boolean needToAddDbmsJobs() {
+        return filterTypes.contains("DBMS_JOB");
     }
 
     private boolean needToAddPublicDbLinks() {
