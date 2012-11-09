@@ -1,0 +1,20 @@
+apply plugin: 'java'
+version = '2.0'
+
+task zip(type: Zip) {
+    from 'src/dist'
+    from configurations.runtime
+}
+
+task zip2(type: Zip) {
+}
+
+repositories {
+	maven {
+     url "http://scheme2ddl.googlecode.com/svn/m2/releases"
+	 }
+}
+
+dependencies {
+    runtime 'com.googlecode:scheme2ddl:2.0'
+}
