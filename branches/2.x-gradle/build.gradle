@@ -7,9 +7,9 @@ task zip(type: Zip) {
 }
 
 repositories {
-	maven {
-     url "http://scheme2ddl.googlecode.com/svn/m2/releases"
-	 }
+    maven {
+        url "http://scheme2ddl.googlecode.com/svn/m2/releases"
+    }
 }
 
 dependencies {
