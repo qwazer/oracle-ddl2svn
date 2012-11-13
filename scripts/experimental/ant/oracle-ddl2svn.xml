@@ -6,7 +6,7 @@
 
     <target name="all" depends="test.connection,clean.output.dir,scheme2ddl,svn.commit"/>
 
-    <target name="test.connection"/> <!--not implemented-->
+    <target name="test.connection"/>
 
     <target name="clean.output.dir">
         <delete includeEmptyDirs="false" verbose="yes">
@@ -23,13 +23,13 @@
               maxmemory="128m">
             <arg line="-url ${db.url}"/>
             <arg line="-output ${output.dir}"/>
-            <!--<arg line="-config ${config.path}"/>-->
-            <!--<arg line="-parallel ${parallel}"/>-->
+            <classpath>
+                <pathelement path="scheme2ddl.config.xml"/>
+            </classpath>
         </java>
     </target>
 
     <target name="svn.commit">
-        <!-- currently only for Windows-->
         <exec executable="./svn.commit.bat" failonerror="true">
             <env key="OUTPUT_DIR" value="${output.dir}"/>
             <env key="SVN_USER" value="${svn.user}"/>

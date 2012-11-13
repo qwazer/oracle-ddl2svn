@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="oracle-ddl2svn" default="all">
+
+
+    <property file="build.properties"/>
+
+    <!-- software revision number -->
+
+    <!--<property name="svnRev" value=""/>-->
+    <!--<property name="version" value="0.0.${svnRev}.BETA"/>-->
+
+    <!-- Compiler options -->
+
+    <patternset id="ignored.files">
+        <exclude name="**/.svn/**"/>
+    </patternset>
+    <patternset id="library.patterns">
+        <include name="*.zip"/>
+        <include name="*.jar"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.gif"/>
+        <include name="**/?*.png"/>
+        <include name="**/?*.jpeg"/>
+        <include name="**/?*.jpg"/>
+        <include name="**/?*.html"/>
+        <include name="**/?*.dtd"/>
+        <include name="**/?*.tld"/>
+        <include name="**/?*.ftl"/>
+    </patternset>
+
+
+    <!-- Project Libraries -->
+
+    <path id="library.lib.classpath">
+        <pathelement location="${basedir}/lib/commons-logging.jar"/>
+        <pathelement location="${basedir}/lib/ojdbc5.jar"/>
+        <pathelement location="${basedir}/lib/spring-asm.jar"/>
+        <pathelement location="${basedir}/lib/spring-beans.jar"/>
+        <pathelement location="${basedir}/lib/spring-context.jar"/>
+        <pathelement location="${basedir}/lib/spring-core.jar"/>
+        <pathelement location="${basedir}/lib/spring-expression.jar"/>
+        <pathelement location="${basedir}/lib/spring-jdbc.jar"/>
+        <pathelement location="${basedir}/lib/spring-tx.jar"/>
+        <pathelement location="${basedir}/lib/commons-io-2.0.1.jar"/>
+    </path>
+
+    <!-- Modules -->
+
+
+    <!-- Module scheme2ddl -->
+
+    <dirname property="module.scheme2ddl.basedir" file="${ant.file}"/>
+
+
+    <property name="scheme2ddl.output.dir" value="${module.scheme2ddl.basedir}/out/production/scheme2ddl"/>
+
+
+    <path id="scheme2ddl.module.production.classpath">
+        <path refid="library.lib.classpath"/>
+    </path>
+
+    <path id="scheme2ddl.runtime.production.module.classpath">
+        <pathelement location="${scheme2ddl.output.dir}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+    <path id="scheme2ddl.module.classpath">
+        <pathelement location="${scheme2ddl.output.dir}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+    <path id="scheme2ddl.runtime.module.classpath">
+        <pathelement location="${scheme2ddl.output.dir}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.scheme2ddl">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.scheme2ddl">
+        <patternset refid="excluded.from.module.scheme2ddl"/>
+    </patternset>
+
+    <path id="scheme2ddl.module.sourcepath">
+        <dirset dir="${module.scheme2ddl.basedir}">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile" description="Compile module scheme2ddl">
+        <mkdir dir="${scheme2ddl.output.dir}"/>
+        <javac destdir="${scheme2ddl.output.dir}">
+
+            <classpath refid="scheme2ddl.module.production.classpath"/>
+            <src refid="scheme2ddl.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.scheme2ddl"/>
+        </javac>
+
+        <copy todir="${scheme2ddl.output.dir}">
+            <fileset dir="${module.scheme2ddl.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target name="clean.module.scheme2ddl" description="cleanup module">
+        <delete dir="${scheme2ddl.output.dir}"/>
+    </target>
+
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="clean" depends="clean.module.scheme2ddl, clean.artifact.dist" description="cleanup all"/>
+
+    <target name="build.modules" depends="init, clean, compile" description="build all modules"/>
+
+    <target name="init.artifacts">
+        <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+        <property name="artifact.output.dist" value="${basedir}/out/artifacts/dist"/>
+        <property name="artifact.output.scheme2ddl:jar" value="${basedir}/out/artifacts/scheme2ddl_jar"/>
+        <mkdir dir="${artifacts.temp.dir}"/>
+        <property name="temp.jar.path.oracle-ddl2svn.zip" value="${artifacts.temp.dir}/oracle-ddl2svn.zip"/>
+        <property name="temp.jar.path.scheme2ddl.jar" value="${artifacts.temp.dir}/scheme2ddl.jar"/>
+    </target>
+
+    <target name="clean.artifact.dist" description="clean dist artifact output">
+        <delete dir="${artifact.output.dist}"/>
+    </target>
+
+    <target name="artifact.dist" depends="init.artifacts, artifact.scheme2ddl:jar"
+            description="Build &apos;dist&apos; artifact">
+        <mkdir dir="${artifact.output.dist}"/>
+        <zip destfile="${temp.jar.path.oracle-ddl2svn.zip}">
+            <zipfileset dir="${artifact.temp.output.scheme2ddl:jar}"/>
+            <zipfileset dir="${basedir}/scripts" excludes="**experimental/**"/>
+            <zipfileset file="${basedir}/scheme2ddl.config.xml"/>
+        </zip>
+        <copy file="${temp.jar.path.oracle-ddl2svn.zip}"
+              tofile="${artifact.output.dist}/${ant.project.name}-v${base.version}.zip"/>
+    </target>
+
+    <target name="artifact.scheme2ddl:jar" depends="init.artifacts, compile, version"
+            description="Build &apos;scheme2ddl:jar&apos; artifact">
+        <property name="artifact.temp.output.scheme2ddl:jar" value="${artifacts.temp.dir}/scheme2ddl_jar"/>
+        <mkdir dir="${artifact.temp.output.scheme2ddl:jar}"/>
+        <jar destfile="${temp.jar.path.scheme2ddl.jar}" duplicate="preserve">
+            <zipfileset file="${basedir}/src/META-INF/spring.schemas" prefix="META-INF"/>
+            <zipfileset file="${basedir}/src/META-INF/spring.tooling" prefix="META-INF"/>
+            <zipfileset file="${basedir}/src/META-INF/spring.handlers" prefix="META-INF"/>
+            <zipfileset file="${basedir}/src/META-INF/readme_about_spring" prefix="META-INF"/>
+            <zipfileset dir="${scheme2ddl.output.dir}"/>
+            <zipfileset src="${basedir}/lib/spring-core.jar"/>
+            <zipfileset src="${basedir}/lib/spring-jdbc.jar"/>
+            <zipfileset src="${basedir}/lib/spring-expression.jar"/>
+            <zipfileset src="${basedir}/lib/spring-tx.jar"/>
+            <zipfileset src="${basedir}/lib/spring-asm.jar"/>
+            <zipfileset src="${basedir}/lib/ojdbc5.jar"/>
+            <zipfileset src="${basedir}/lib/spring-beans.jar"/>
+            <zipfileset src="${basedir}/lib/commons-logging.jar"/>
+            <zipfileset src="${basedir}/lib/spring-context.jar"/>
+            <zipfileset src="${basedir}/lib/commons-io-2.0.1.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="ru.qwazer.scheme2ddl.Main"/>
+                <attribute name="Implementation-Version" value="${this.version}"/>
+                <attribute name="Built-By" value="${user.name}"/>
+                <section name="SVN INFO">
+                    <attribute name="svn-url" value="${svn.url}"/>
+                    <attribute name="svn-revision" value="${svn.rev}"/>
+                    <attribute name="svn-author" value="${svn.author}"/>
+                    <attribute name="svn-commited-date" value="${svn.lastDate}"/>
+                </section>
+            </manifest>
+        </jar>
+        <copy file="${temp.jar.path.scheme2ddl.jar}" tofile="${artifact.temp.output.scheme2ddl:jar}/scheme2ddl.jar"/>
+    </target>
+
+    <target name="build.all.artifacts" depends="artifact.dist, artifact.scheme2ddl:jar"
+            description="Build all artifacts">
+        <mkdir dir="${artifact.output.scheme2ddl:jar}"/>
+        <copy todir="${artifact.output.scheme2ddl:jar}">
+            <fileset dir="${artifact.temp.output.scheme2ddl:jar}"/>
+        </copy>
+
+        <!-- Delete temporary files -->
+        <delete dir="${artifacts.temp.dir}"/>
+    </target>
+
+
+    <target name="version" depends="svn-work" description="Print current version">
+        <property file="build.version"/>
+        <fail unless="version.major" message="Invalid contents for file 'build.version', missing 'version.major'."/>
+        <fail unless="version.minor" message="Invalid contents for file 'build.version', missing 'version.minor'."/>
+
+        <property name="base.version" value="${version.major}.${version.minor}"/>
+
+
+        <condition property="this.version" value="${base.version}" else="${base.version},SVN:${svn.rev}">
+            <!--suppress AntResolveInspection -->
+            <istrue value="${skip.svn}"/>
+        </condition>
+
+        <echo message=" ${ant.project.name} ${this.version}"/>
+
+
+    </target>
+
+
+    <target name="minor" description="Release minor: increment project version 'minor' component">
+      <propertyfile file="build.version">
+        <entry key="version.minor" type="int" operation="+" value="1"/>
+      </propertyfile>
+      <antcall target="version"/>
+    </target>
+
+    <target name="major" description="Release major: increment project version 'major' component.  Set 'minor' to zero.">
+
+      <propertyfile file="build.version">
+        <entry key="version.major" type="int" operation="+" value="1"/>
+        <entry key="version.minor" type="int" value="0"/>
+      </propertyfile>
+      <antcall target="version"/>
+    </target>
+
+
+
+
+
+
+
+
+    <target name="svn-work" unless="${skip.svn}">
+
+
+        <path id="svnant.classpath">
+            <pathelement location="./antlib/svnant.jar"/>
+            <pathelement location="./antlib/svnkit.jar"/>
+            <pathelement location="./antlib/svnClientAdapter.jar"/>
+        </path>
+
+        <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svnant.classpath" />
+
+
+        <!--<svn javahl="false" svnkit="true">-->
+            <!--<update dir="${basedir}"/>-->
+        <!--</svn>-->
+
+
+
+        <!--<typedef resource="com/googlecode/svntask/svntask.xml" classpath="C:\Apache\svntask-1.0.8\svntask.jar">-->
+            <!--<classpath>-->
+                <!--<fileset dir="C:\Apache\svntask-1.0.8/lib">-->
+                    <!--<include name="svnkit.jar"/>-->
+                    <!--<include name="svntask.jar"/>-->
+                <!--</fileset>-->
+            <!--</classpath>-->
+        <!--</typedef>-->
+
+
+        <!--&lt;!&ndash; Do an update first to make sure you have the latest version &ndash;&gt;-->
+        <!--<svn >-->
+            <!--<update path="${basedir}" force="true" recursive="true"/>-->
+        <!--</svn>-->
+
+        <!--<svn>-->
+            <!--<info path="${basedir}"-->
+                  <!--revisionProperty="svn.revision"-->
+                  <!--urlproperty="svn.url"-->
+                  <!--authorproperty="svn.author"-->
+                  <!--committeddateproperty="svn.commited.date"-->
+                    <!--/>-->
+        <!--</svn>-->
+
+        <svn javahl="false" svnkit="true">
+            <info target="." propprefix="svn.">
+
+                </info>
+
+
+            </svn>
+        <!--<echoproperties/>-->
+        <echo message="svn url is ${svn.url}"></echo>
+        <echo message="svn author is ${svn.author}"></echo>
+        <echo message="svn commited date is ${svn.lastDate}"></echo>
+    </target>
+	
+	<target name="echoproperties">
+	<echoproperties/>
+	</target>
+
+
+    <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

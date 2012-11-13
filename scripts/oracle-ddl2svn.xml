@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="oracle-ddl2svn2" basedir="." default="all">
+
+    <property file="oracle-ddl2svn.properties"/>
+
+    <path id="svnant.classpath">
+        <pathelement location="${antlib.dir}/svnant.jar"/>
+        <pathelement location="${antlib.dir}/svnkit.jar"/>
+        <pathelement location="${antlib.dir}/svnClientAdapter.jar"/>
+    </path>
+
+    <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svnant.classpath"/>
+
+
+    <target name="svn filesets">
+        <fileset id="svnUnversioned" dir="${output.dir}">
+            <svnUnversioned javahl="false" svnkit="true"/>
+        </fileset>
+    </target>
+
+    <target name="svn work" depends="svn filesets">
+        <svn javahl="false" svnkit="true">
+            <add>
+                <fileset refid="svnUnversioned"/>
+            </add>
+        </svn>
+        <svn javahl="false" svnkit="true">
+            <commit/>
+        </svn>
+
+    </target>
+
+
+    <target name="scheme2ddl">
+        <java jar="${scheme2ddl.path}/scheme2ddl.jar" fork="true">
+            <arg line="-url ${db.url}"/>
+            <arg line="-o ${output.dir}"/>
+        </java>
+    </target>
+
+    <target name="show version">
+        <java jar="${scheme2ddl.path}/scheme2ddl.jar" fork="true">
+            <arg line="-version"/>
+        </java>
+    </target>
+
+    <target name="all" depends="svn filesets,svn work"/>
+
+
+</project>

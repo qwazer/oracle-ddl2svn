@@ -1,0 +1,6 @@
+These spring files
+    spring.handlers
+    spring.schemas
+    spring.tooling
+copied and merged from spring-beans.jar and spring-context.jar
+for building  single jar with all dependencies libs inside
