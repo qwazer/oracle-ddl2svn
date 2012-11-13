@@ -16,8 +16,6 @@ dependencies {
 
 task zip(type: Zip) {
     from 'src/dist'
-    // note that zipTree call is wrapped in closure so that configuration
-    // is only resolved at execution time
     from({ zipTree(configurations.distributive.singleFile) }) {
         include 'scheme2ddl.config.xml'
         rename 'scheme2ddl.config.xml', 'scheme2ddl.config.xml.example'
