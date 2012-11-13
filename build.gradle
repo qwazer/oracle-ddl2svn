@@ -17,6 +17,7 @@ dependencies {
 }
 
 task zip(type: Zip) {
+    archiveName = "oracle-ddl2svn-" + project.version + ".zip"
     from 'src/dist'
     from({ zipTree(configurations.distributive.singleFile) }) {
         include 'scheme2ddl.config.xml'
