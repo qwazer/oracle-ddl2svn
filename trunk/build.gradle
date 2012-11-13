@@ -11,7 +11,9 @@ configurations {
 }
 
 dependencies {
-    distributive 'com.googlecode:scheme2ddl:2.0'
+    distributive('com.googlecode:scheme2ddl:2.0') {
+        transitive = false
+    }
 }
 
 task zip(type: Zip) {

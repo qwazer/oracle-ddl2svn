@@ -1,0 +1,1 @@
+This is sample ant script of using scheme2ddl and autotrack changes in svn
