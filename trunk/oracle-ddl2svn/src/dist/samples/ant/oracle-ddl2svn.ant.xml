@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="oracle-ddl2svn" basedir="" default="all">
+
+    <property file="oracle-ddl2svn.properties"/>
+
+
+    <target name="all" depends="test.connection,clean.output.dir,scheme2ddl,svn.commit"/>
+
+    <target name="test.connection"/> <!--not implemented-->
+
+    <target name="clean.output.dir">
+        <delete includeEmptyDirs="false" verbose="yes">
+            <fileset dir="${output.dir}"
+                     defaultexcludes="true"
+                     includes="**/*"/>
+        </delete>
+    </target>
+
+    <target name="scheme2ddl">
+        <java jar="${scheme2ddl.path}"
+              fork="true"
+              failonerror="true"
+              maxmemory="128m">
+            <arg line="-url ${db.url}"/>
+            <arg line="-output ${output.dir}"/>
+            <!--<arg line="-config ${config.path}"/>-->
+            <!--<arg line="-parallel ${parallel}"/>-->
+        </java>
+    </target>
+
+    <target name="svn.commit">
+        <!-- currently only for Windows-->
+        <exec executable="./svn.commit.bat" failonerror="true">
+            <env key="OUTPUT_DIR" value="${output.dir}"/>
+            <env key="SVN_USER" value="${svn.user}"/>
+            <env key="SVN_PASSWORD" value="${svn.password}"/>
+        </exec>
+
+    </target>
+
+
+</project>
