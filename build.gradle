@@ -1,0 +1,25 @@
+version = '2.0'
+
+repositories {
+    maven {
+        url "http://scheme2ddl.googlecode.com/svn/m2/releases"
+    }
+}
+
+configurations {
+    distributive
+}
+
+dependencies {
+    distributive 'com.googlecode:scheme2ddl:2.0'
+}
+
+task zip(type: Zip) {
+    from 'src/dist'
+    from({ zipTree(configurations.distributive.singleFile) }) {
+        include 'scheme2ddl.config.xml'
+        rename 'scheme2ddl.config.xml', 'scheme2ddl.config.xml.example'
+    }
+    from configurations.distributive
+}
+
