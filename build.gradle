@@ -1,10 +1,4 @@
-apply plugin: 'java'
 version = '2.0'
-
-task zip(type: Zip) {
-    from 'src/dist'
-    from configurations.runtime
-}
 
 repositories {
     maven {
@@ -12,6 +6,22 @@ repositories {
     }
 }
 
-dependencies {
-    runtime 'com.googlecode:scheme2ddl:2.0'
+configurations {
+    distributive
 }
+
+dependencies {
+    distributive 'com.googlecode:scheme2ddl:2.0'
+}
+
+task zip(type: Zip) {
+    from 'src/dist'
+    // note that zipTree call is wrapped in closure so that configuration
+    // is only resolved at execution time
+    from({ zipTree(configurations.distributive.singleFile) }) {
+        include 'scheme2ddl.config.xml'
+        rename 'scheme2ddl.config.xml', 'scheme2ddl.config.xml.example'
+    }
+    from configurations.distributive
+}
+
