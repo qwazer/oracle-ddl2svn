@@ -17,12 +17,13 @@ dependencies {
 }
 
 task zip(type: Zip) {
-    archiveName = "oracle-ddl2svn-" + project.version + ".zip"
+    archiveName = "oracle-ddl2svn-v" + project.version + ".zip"
     from 'src/dist'
     from({ zipTree(configurations.distributive.singleFile) }) {
         include 'scheme2ddl.config.xml'
-        rename 'scheme2ddl.config.xml', 'scheme2ddl.config.xml.example'
+        rename 'scheme2ddl.config.xml', 'scheme2ddl.config.xml.optional.sample'
     }
     from configurations.distributive
+    rename 'scheme2ddl.*.jar', 'scheme2ddl.jar'
 }
 
