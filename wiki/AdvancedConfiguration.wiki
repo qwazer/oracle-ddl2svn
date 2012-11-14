@@ -1,6 +1,8 @@
 #labels Featured,Phase-Support
+*Obsolete* 
 
 ==Advanced configuration==
+
 advanced configuration provided in scheme2ddl.config.xml
 
 What can be configured:
