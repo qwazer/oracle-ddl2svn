@@ -1,4 +1,4 @@
-version = '2.0.1'
+version = '2.1'
 
 repositories {
     maven {
@@ -11,7 +11,7 @@ configurations {
 }
 
 dependencies {
-    distributive('com.googlecode:scheme2ddl:2.0.1') {
+    distributive('com.googlecode:scheme2ddl:2.1') {
         transitive = false
     }
 }
