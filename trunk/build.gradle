@@ -41,7 +41,7 @@ task release(dependsOn: 'zip') << {
             password: ant.properties.googlecode_password,
             projectname: 'oracle-ddl2svn',
             filename: project.ext.artifactName,
-            targetfilename: project.ext.artifactName + "tmp",
+            targetfilename: project.ext.artifactName,
             summary: "release " + project.version,
             labels: "Featured, Type-Archive"
     )
