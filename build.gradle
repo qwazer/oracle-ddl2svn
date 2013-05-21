@@ -1,5 +1,7 @@
 version = '2.2.3'
 
+project.ext.set("artifactName", "oracle-ddl2svn-v" + project.version + ".zip")
+
 repositories {
     maven {
         url "http://scheme2ddl.googlecode.com/svn/m2/releases"
@@ -17,7 +19,7 @@ dependencies {
 }
 
 task zip(type: Zip) {
-    archiveName = "oracle-ddl2svn-v" + project.version + ".zip"
+    archiveName = project.ext.artifactName
     from 'src/dist'
     from({ zipTree(configurations.distributive.singleFile) }) {
         include 'scheme2ddl.config.xml'
@@ -25,5 +27,23 @@ task zip(type: Zip) {
     }
     from configurations.distributive
     rename 'scheme2ddl.*.jar', 'scheme2ddl.jar'
+}
+
+task release(dependsOn: 'zip') << {
+    ant.taskdef(name: 'googlecode_upload', classname : 'net.bluecow.googlecode.ant.GoogleCodeUploadTask') {
+        classpath {
+            fileset(dir: 'lib', includes: 'ant-googlecode-0.0.3.jar')
+        }
+    }
+    ant.property(file: 'credentials.properties')
+    ant.googlecode_upload(
+            username: ant.properties.googlecode_username,
+            password: ant.properties.googlecode_password,
+            projectname: 'oracle-ddl2svn',
+            filename: project.ext.artifactName,
+            targetfilename: project.ext.artifactName + "tmp",
+            summary: "release " + project.version,
+            labels: "Featured, Type-Archive"
+    )
 }
 
