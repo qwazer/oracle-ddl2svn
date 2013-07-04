@@ -1,4 +1,4 @@
-version = '2.2.3'
+version = '2.3'
 
 project.ext.set("artifactName", "oracle-ddl2svn-v" + project.version + ".zip")
 
@@ -13,7 +13,7 @@ configurations {
 }
 
 dependencies {
-    distributive('com.googlecode:scheme2ddl:2.2.3') {
+    distributive('com.googlecode:scheme2ddl:2.3') {
         transitive = false
     }
 }
