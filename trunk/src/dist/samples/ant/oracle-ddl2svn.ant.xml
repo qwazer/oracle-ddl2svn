@@ -3,10 +3,18 @@
 
     <property file="oracle-ddl2svn.properties"/>
 
-
     <target name="all" depends="test.connection,clean.output.dir,scheme2ddl,svn.commit"/>
 
-    <target name="test.connection"/> <!--not implemented-->
+    <target name="test.connection">
+        <java jar="${scheme2ddl.path}"
+              fork="true"
+              failonerror="true"
+              maxmemory="128m"
+              resultproperty="test.conection.value">
+            <arg line="-url ${db.url}"/>
+            <arg line="-tc"/>
+        </java>
+    </target>
 
     <target name="clean.output.dir">
         <delete includeEmptyDirs="false" verbose="yes">
