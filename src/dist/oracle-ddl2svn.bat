@@ -18,6 +18,8 @@ set OUTPUT_DIR=%2
 set SVN_USER=%3
 set SVN_PASS=%4
 set COMMIT_MESSAGE="automatic commit by oracle-ddl2svn"
+rem name of dir we should not delete before workdir clearance
+set RCS_DIR=".svn"
 
 rem test db connection,
 rem if db connect is fail, do not perform any filesystem operation, only clean tmp file end exit
@@ -32,7 +34,8 @@ if not errorlevel 1 goto :exit
 rem delete all files from output directory exept system files
 rem this command must keep on disk svn meta information stored in .svn folders
 echo =========  start of scheme2ddl %date% %time% ==============
-del %OUTPUT_DIR% /Q /S /A-S
+for /f %%F in ('dir /b /ad "%OUTPUT_DIR%" ^| findstr /vile ".svn"') do rmdir /q /s "%OUTPUT_DIR%\%%F"
+for /f %%F in ('dir /b /a "%OUTPUT_DIR%" ^| findstr /vile ".svn"') do del /q "%OUTPUT_DIR%\%%F"
 java -jar scheme2ddl.jar -url %DB_URL% -output %OUTPUT_DIR%
 echo =========  end of scheme2ddl %date% %time% ==============
 for /f "tokens=2*" %%i in ('svn status %OUTPUT_DIR% ^| find "?"') do svn add "%%i"
