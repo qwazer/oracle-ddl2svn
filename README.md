@@ -1,7 +1,7 @@
 Set of tools for automatization storing of oracle DDL schema in SVN.
 
 ### The contents of the set ###
-  1. [scheme2ddl](http://code.google.com/p/scheme2ddl) - command line utility for export oracle schema in set of ddl scripts. provide lot of configurations via basic command line options or advanced XML configuration
+  1. [scheme2ddl](https://github.com/qwazer/scheme2ddl) - command line utility for export oracle schema in set of ddl scripts. provide lot of configurations via basic command line options or advanced XML configuration
   1. additional scripts (sh, bat and ant) for automated retrieving scheme ddl and storing it in svn
 
 
